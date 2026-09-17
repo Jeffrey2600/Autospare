@@ -61,8 +61,13 @@ node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"
 
 ```bash
 npx prisma migrate dev
+npx prisma generate
 npx prisma db seed
 ```
+
+(Prisma 7 doesn't auto-generate the client after `migrate dev` like older
+versions did — `generate` has to be run explicitly, or the `db seed` step
+below will fail with `Cannot find module '.../generated/prisma/client'`.)
 
 This creates `dev.db` (SQLite) with all tables, and seeds it with an admin
 account, sample categories, brands, 18 demo products (with generated
