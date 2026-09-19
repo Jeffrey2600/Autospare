@@ -67,7 +67,7 @@ async function main() {
   const brandNames = ["TorqueMax", "RoadForce", "DuraParts", "VoltEdge", "IronGrip", "PrimeDrive"];
   const brands: Record<string, string> = {};
   for (const name of brandNames) {
-    const logo = await writePlaceholderImage(name, "brands", slugify(name), 300, 300);
+    const logo = await writePlaceholderImage(name, "brands", slugify(name), 300, 300, false);
     const brand = await prisma.brand.upsert({
       where: { slug: slugify(name) },
       update: {},
@@ -80,7 +80,7 @@ async function main() {
   // --- Categories -----------------------------------------------------
   async function upsertCategory(name: string, vehicleType: "CAR" | "BIKE" | "UNIVERSAL", parentId?: string, position = 0) {
     const slug = slugify(name);
-    const image = await writePlaceholderImage(name, "categories", slug, 600, 600);
+    const image = await writePlaceholderImage(name, "categories", slug, 600, 600, false);
     return prisma.category.upsert({
       where: { slug },
       update: {},

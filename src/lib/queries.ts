@@ -143,12 +143,48 @@ export async function getProductBySlug(slug: string) {
   });
 }
 
-export async function getRelatedProducts(categoryId: string, excludeId: string, limit = 4) {
-  return prisma.product.findMany({
+export async function getRelatedProducts(
+  categoryId: string,
+  excludeId: string,
+  vehicleType?: string,
+  limit = 4
+) {
+  const include = { images: { orderBy: { position: "asc" as const }, take: 1 } };
+
+  const sameCategory = await prisma.product.findMany({
     where: { categoryId, isActive: true, id: { not: excludeId } },
     take: limit,
-    include: { images: { orderBy: { position: "asc" }, take: 1 } },
+    include,
   });
+  if (sameCategory.length >= limit) return sameCategory;
+
+  // Small categories would otherwise leave a near-empty "Related Products"
+  // row, so top it up with the same vehicle type, then anything else.
+  const seen = new Set([excludeId, ...sameCategory.map((p) => p.id)]);
+
+  if (vehicleType) {
+    const sameVehicle = await prisma.product.findMany({
+      where: {
+        isActive: true,
+        vehicleType: vehicleType as "CAR" | "BIKE" | "UNIVERSAL",
+        id: { notIn: [...seen] },
+      },
+      take: limit - sameCategory.length,
+      include,
+    });
+    sameCategory.push(...sameVehicle);
+    sameVehicle.forEach((p) => seen.add(p.id));
+  }
+  if (sameCategory.length >= limit) return sameCategory;
+
+  const filler = await prisma.product.findMany({
+    where: { isActive: true, id: { notIn: [...seen] } },
+    orderBy: { createdAt: "desc" },
+    take: limit - sameCategory.length,
+    include,
+  });
+
+  return [...sameCategory, ...filler];
 }
 
 export async function getAllBrands() {

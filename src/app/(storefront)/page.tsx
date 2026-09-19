@@ -14,6 +14,10 @@ export default async function HomePage() {
     getNavCategories(),
   ]);
 
+  // Top-level is just Car/Bike, which the tiles above already cover — the
+  // subcategories are what customers actually browse by.
+  const subCategories = categories.flatMap((cat) => cat.children).slice(0, 8);
+
   return (
     <div>
       <section className="relative overflow-hidden bg-slate-900 text-white">
@@ -59,22 +63,29 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {categories.length > 0 ? (
+      {subCategories.length > 0 ? (
         <section className="mx-auto max-w-7xl px-4 py-6">
           <h2 className="mb-4 text-xl font-bold text-slate-900">Shop by Category</h2>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {categories.slice(0, 6).map((cat) => (
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {subCategories.map((cat) => (
               <Link
                 key={cat.id}
                 href={`/products?category=${cat.slug}`}
-                className="flex flex-col items-center gap-2 rounded-lg border border-slate-200 p-4 text-center hover:border-brand-400 hover:shadow-sm"
+                className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
               >
-                <div className="relative h-16 w-16 overflow-hidden rounded-full bg-slate-100">
+                <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-slate-100">
                   {cat.image ? (
-                    <Image src={cat.image} alt={cat.name} fill className="object-cover" />
+                    <Image src={cat.image} alt="" fill sizes="48px" className="object-cover" />
                   ) : null}
                 </div>
-                <span className="text-sm font-medium text-slate-700">{cat.name}</span>
+                <div className="min-w-0">
+                  <span className="block truncate text-sm font-semibold text-slate-800 group-hover:text-brand-700">
+                    {cat.name}
+                  </span>
+                  <span className="text-xs text-slate-400">
+                    {cat.vehicleType === "CAR" ? "Car" : cat.vehicleType === "BIKE" ? "Bike" : "Universal"}
+                  </span>
+                </div>
               </Link>
             ))}
           </div>

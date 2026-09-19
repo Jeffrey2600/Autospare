@@ -31,7 +31,7 @@ export default async function ProductDetailPage({
 
   if (!product) notFound();
 
-  const related = await getRelatedProducts(product.categoryId, product.id);
+  const related = await getRelatedProducts(product.categoryId, product.id, product.vehicleType);
   const avgRating =
     product.reviews.length > 0
       ? product.reviews.reduce((s, r) => s + r.rating, 0) / product.reviews.length
