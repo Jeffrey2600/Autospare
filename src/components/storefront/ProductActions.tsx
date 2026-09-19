@@ -14,8 +14,10 @@ type Props = {
 export function ProductActions({ product, image }: Props) {
   const [qty, setQty] = useState(1);
   const addItem = useCartStore((s) => s.addItem);
+  const hasHydrated = useCartStore((s) => s.hasHydrated);
   const router = useRouter();
   const outOfStock = product.stock <= 0;
+  const disabled = outOfStock || !hasHydrated;
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
@@ -41,7 +43,7 @@ export function ProductActions({ product, image }: Props) {
       <Button
         variant="outline"
         size="lg"
-        disabled={outOfStock}
+        disabled={disabled}
         onClick={() => addItem({ productId: product.id, title: product.title, slug: product.slug, price: product.price, image, stock: product.stock }, qty)}
         className="flex-1"
       >
@@ -49,7 +51,7 @@ export function ProductActions({ product, image }: Props) {
       </Button>
       <Button
         size="lg"
-        disabled={outOfStock}
+        disabled={disabled}
         onClick={() => {
           addItem({ productId: product.id, title: product.title, slug: product.slug, price: product.price, image, stock: product.stock }, qty);
           router.push("/checkout");

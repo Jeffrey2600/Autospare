@@ -22,13 +22,14 @@ type Props = {
 
 export function AddToCartButton({ product, image, quantity = 1, className, fullWidth }: Props) {
   const addItem = useCartStore((s) => s.addItem);
+  const hasHydrated = useCartStore((s) => s.hasHydrated);
   const [added, setAdded] = useState(false);
   const outOfStock = product.stock <= 0;
 
   return (
     <button
       type="button"
-      disabled={outOfStock}
+      disabled={outOfStock || !hasHydrated}
       className={cn(
         buttonClasses("primary", "md", className),
         fullWidth && "w-full"

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -62,6 +63,18 @@ export const useCartStore = create<CartState>()(
     }
   )
 );
+
+// Safety net: if the persist middleware's own rehydration callback never
+// fires (seen intermittently with Turbopack's dev-mode module duplication),
+// this guarantees Add to Cart/Buy Now don't stay disabled forever. Mounted
+// once near the root of the app.
+export function useCartHydrationSafetyNet() {
+  useEffect(() => {
+    if (!useCartStore.getState().hasHydrated) {
+      useCartStore.setState({ hasHydrated: true });
+    }
+  }, []);
+}
 
 export function cartTotals(items: CartItem[]) {
   const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
