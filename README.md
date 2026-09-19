@@ -93,7 +93,11 @@ Everything seeded (products, categories, brands, banners, store contact
 info) is meant to be replaced from the admin panel:
 
 - **Products/Photos**: `/admin/products` → delete the sample products and
-  add your real stock, or edit them in place and swap the photos.
+  add your real stock, or edit them in place and swap the photos. Most demo
+  products use real reference photos from Wikimedia Commons
+  (`public/demo-products/`, credits in that folder's `CREDITS.md`) rather
+  than generated graphics, so the catalog looks realistic out of the box —
+  they're still just stand-ins for your actual stock photos.
 - **Categories/Brands**: `/admin/categories`, `/admin/brands`.
 - **Store info**: `/admin/settings` — name, logo, phone, WhatsApp, address,
   social links, shipping fee.

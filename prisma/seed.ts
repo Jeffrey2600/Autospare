@@ -1,8 +1,19 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
+import fs from "node:fs";
+import path from "node:path";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { writePlaceholderImage } from "./placeholder";
+
+const DEMO_PRODUCTS_DIR = path.join(process.cwd(), "public", "demo-products");
+
+async function productImageUrl(slug: string, title: string) {
+  if (fs.existsSync(path.join(DEMO_PRODUCTS_DIR, `${slug}.jpg`))) {
+    return `/demo-products/${slug}.jpg`;
+  }
+  return writePlaceholderImage(title, "products", slug, 800, 800);
+}
 
 const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
@@ -357,7 +368,7 @@ async function main() {
       },
     });
 
-    const imageUrl = await writePlaceholderImage(p.title, "products", slug, 800, 800);
+    const imageUrl = await productImageUrl(slug, p.title);
     await prisma.productImage.create({
       data: { productId: created.id, url: imageUrl, altText: p.title, position: 0 },
     });
