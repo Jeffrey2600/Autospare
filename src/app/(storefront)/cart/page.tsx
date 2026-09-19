@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { useCartStore, cartTotals } from "@/lib/cart-store";
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
@@ -21,7 +21,10 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-slate-900">Your cart is empty</h1>
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+          <ShoppingCart className="h-8 w-8" />
+        </div>
+        <h1 className="mt-4 text-2xl font-bold text-slate-900">Your cart is empty</h1>
         <p className="mt-2 text-slate-500">Browse our catalog and add some parts to get started.</p>
         <Link href="/products">
           <Button className="mt-6">Continue Shopping</Button>

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ShieldCheck, Truck, Headset, Undo2 } from "lucide-react";
+import { ShieldCheck, Truck, Headset, Undo2, Car, Bike, ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { BannerCarousel } from "@/components/storefront/BannerCarousel";
+import { buttonClasses } from "@/components/ui/Button";
 import { getActiveBanners, getFeaturedProducts, getNavCategories, getNewArrivals } from "@/lib/queries";
 
 export default async function HomePage() {
@@ -26,7 +27,7 @@ export default async function HomePage() {
             <p className="max-w-lg text-slate-300">
               Thousands of parts in stock — engine, brakes, electricals, body panels and more. Trusted by mechanics and riders alike.
             </p>
-            <Link href="/products" className="rounded-md bg-brand-600 px-6 py-3 font-semibold hover:bg-brand-700">
+            <Link href="/products" className={buttonClasses("primary", "lg")}>
               Shop Now
             </Link>
           </div>
@@ -37,15 +38,23 @@ export default async function HomePage() {
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-2">
           <Link
             href="/products?vehicleType=CAR"
-            className="group relative flex h-40 items-end overflow-hidden rounded-xl bg-slate-100 p-6 sm:h-56"
+            className="group relative flex h-40 flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 to-brand-900 p-6 shadow-sm transition-shadow hover:shadow-lg sm:h-56"
           >
-            <span className="text-2xl font-bold text-slate-900 group-hover:text-brand-700">Car Parts</span>
+            <Car className="h-10 w-10 text-brand-300 transition-transform group-hover:scale-110 sm:h-12 sm:w-12" />
+            <span className="flex items-center gap-1 text-2xl font-bold text-white">
+              Car Parts
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </span>
           </Link>
           <Link
             href="/products?vehicleType=BIKE"
-            className="group relative flex h-40 items-end overflow-hidden rounded-xl bg-slate-100 p-6 sm:h-56"
+            className="group relative flex h-40 flex-col justify-between overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 to-sky-900 p-6 shadow-sm transition-shadow hover:shadow-lg sm:h-56"
           >
-            <span className="text-2xl font-bold text-slate-900 group-hover:text-brand-700">Bike Parts</span>
+            <Bike className="h-10 w-10 text-sky-300 transition-transform group-hover:scale-110 sm:h-12 sm:w-12" />
+            <span className="flex items-center gap-1 text-2xl font-bold text-white">
+              Bike Parts
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </span>
           </Link>
         </div>
       </section>

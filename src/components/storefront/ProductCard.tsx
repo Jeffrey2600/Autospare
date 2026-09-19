@@ -21,7 +21,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
       : null;
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white transition-shadow hover:shadow-md">
+    <div className="group flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-lg">
       <Link href={`/products/${product.slug}`} className="relative block aspect-square bg-slate-50">
         {image ? (
           <Image

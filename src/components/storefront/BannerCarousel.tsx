@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { buttonClasses } from "@/components/ui/Button";
 
 type BannerSlide = {
   id: string;
@@ -57,10 +58,7 @@ export function BannerCarousel({ banners }: { banners: BannerSlide[] }) {
               {banner.title ?? "Genuine Parts for Every Ride"}
             </h1>
             {banner.subtitle ? <p className="max-w-md text-slate-200">{banner.subtitle}</p> : null}
-            <Link
-              href={banner.linkUrl ?? "/products"}
-              className="rounded-md bg-brand-600 px-6 py-3 font-semibold hover:bg-brand-700"
-            >
+            <Link href={banner.linkUrl ?? "/products"} className={buttonClasses("primary", "lg")}>
               Shop Now
             </Link>
           </div>

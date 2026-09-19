@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SearchX } from "lucide-react";
 import { ProductCard } from "@/components/storefront/ProductCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { Input } from "@/components/ui/Field";
@@ -185,7 +186,8 @@ export default async function ProductsPage({
           </div>
 
           {result.items.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-slate-300 py-16 text-center text-slate-500">
+            <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed border-slate-300 py-16 text-center text-slate-500">
+              <SearchX className="h-8 w-8 text-slate-300" />
               No products match your filters.
             </div>
           ) : (
