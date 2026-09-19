@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShieldCheck, Truck, Headset, Undo2 } from "lucide-react";
 import { ProductCard } from "@/components/storefront/ProductCard";
+import { BannerCarousel } from "@/components/storefront/BannerCarousel";
 import { getActiveBanners, getFeaturedProducts, getNavCategories, getNewArrivals } from "@/lib/queries";
 
 export default async function HomePage() {
@@ -12,25 +13,11 @@ export default async function HomePage() {
     getNavCategories(),
   ]);
 
-  const hero = banners[0];
-
   return (
     <div>
       <section className="relative overflow-hidden bg-slate-900 text-white">
-        {hero ? (
-          <div className="relative h-72 w-full sm:h-96">
-            <Image src={hero.image} alt={hero.title ?? "Promotion"} fill className="object-cover opacity-60" priority />
-            <div className="absolute inset-0 flex flex-col items-start justify-center gap-4 px-6 sm:px-16">
-              <h1 className="max-w-lg text-3xl font-bold sm:text-5xl">{hero.title ?? "Genuine Parts for Every Ride"}</h1>
-              {hero.subtitle ? <p className="max-w-md text-slate-200">{hero.subtitle}</p> : null}
-              <Link
-                href={hero.linkUrl ?? "/products"}
-                className="rounded-md bg-brand-600 px-6 py-3 font-semibold hover:bg-brand-700"
-              >
-                Shop Now
-              </Link>
-            </div>
-          </div>
+        {banners.length > 0 ? (
+          <BannerCarousel banners={banners} />
         ) : (
           <div className="mx-auto flex max-w-7xl flex-col items-start gap-4 px-6 py-20 sm:py-28">
             <h1 className="max-w-xl text-3xl font-bold sm:text-5xl">

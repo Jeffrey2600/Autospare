@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import { writePlaceholderImage } from "./placeholder";
+import { writePlaceholderImage, writeBannerArt } from "./placeholder";
 
 const DEMO_PRODUCTS_DIR = path.join(process.cwd(), "public", "demo-products");
 
@@ -377,14 +377,30 @@ async function main() {
 
   // --- Banners --------------------------------------------------------
   const bannerData = [
-    { title: "Genuine Parts for Every Ride", subtitle: "Shop car & bike spare parts at fair prices", linkUrl: "/products", label: "AutoSpare Promo Banner" },
-    { title: "New Stock Just Arrived", subtitle: "Check out the latest additions to our catalog", linkUrl: "/products?sort=newest", label: "New Arrivals Banner" },
+    {
+      title: "Genuine Parts for Every Ride",
+      subtitle: "Shop car & bike spare parts at fair prices",
+      linkUrl: "/products",
+      colors: ["#ea580c", "#0f172a"],
+    },
+    {
+      title: "New Stock Just Arrived",
+      subtitle: "Check out the latest additions to our catalog",
+      linkUrl: "/products?sort=newest",
+      colors: ["#0369a1", "#0f172a"],
+    },
+    {
+      title: "Free Delivery on Orders Above ₹999",
+      subtitle: "Trusted by mechanics and riders across the city",
+      linkUrl: "/products",
+      colors: ["#15803d", "#0f172a"],
+    },
   ];
   for (let i = 0; i < bannerData.length; i++) {
     const b = bannerData[i];
     const existingCount = await prisma.banner.count();
     if (existingCount > i) continue;
-    const image = await writePlaceholderImage(b.label, "banners", `banner-${i + 1}`, 1600, 600, false);
+    const image = await writeBannerArt(b.colors[0], b.colors[1], i, `banner-${i + 1}-art`);
     await prisma.banner.create({
       data: { title: b.title, subtitle: b.subtitle, linkUrl: b.linkUrl, image, position: i, isActive: true },
     });
