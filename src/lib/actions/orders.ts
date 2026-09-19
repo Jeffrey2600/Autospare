@@ -8,22 +8,60 @@ import { generateOrderNumber } from "@/lib/utils";
 export type CheckoutFormState = {
   error: string | null;
   orderNumber?: string;
+  values?: {
+    customerName?: string;
+    customerPhone?: string;
+    customerEmail?: string;
+    shippingLine1?: string;
+    shippingLine2?: string;
+    shippingCity?: string;
+    shippingState?: string;
+    shippingPostal?: string;
+    paymentMethod?: string;
+    notes?: string;
+  };
 };
+
+function valuesFromFormData(formData: FormData): NonNullable<CheckoutFormState["values"]> {
+  const get = (key: string) => {
+    const v = formData.get(key);
+    return typeof v === "string" ? v : undefined;
+  };
+  return {
+    customerName: get("customerName"),
+    customerPhone: get("customerPhone"),
+    customerEmail: get("customerEmail"),
+    shippingLine1: get("shippingLine1"),
+    shippingLine2: get("shippingLine2"),
+    shippingCity: get("shippingCity"),
+    shippingState: get("shippingState"),
+    shippingPostal: get("shippingPostal"),
+    paymentMethod: get("paymentMethod"),
+    notes: get("notes"),
+  };
+}
 
 const cartItemSchema = z.object({
   productId: z.string().min(1),
   quantity: z.number().int().min(1),
 });
 
+const phonePattern = /^[6-9]\d{9}$/;
+const postalPattern = /^\d{6}$/;
+
 const checkoutSchema = z.object({
   customerName: z.string().trim().min(2, "Enter your full name"),
-  customerPhone: z.string().trim().min(7, "Enter a valid phone number"),
-  customerEmail: z.string().trim().email().optional().or(z.literal("")),
+  customerPhone: z
+    .string()
+    .trim()
+    .transform((v) => v.replace(/[\s-]/g, "").replace(/^\+?91/, ""))
+    .pipe(z.string().regex(phonePattern, "Enter a valid 10-digit mobile number")),
+  customerEmail: z.string().trim().email("Enter a valid email address"),
   shippingLine1: z.string().trim().min(3, "Enter your address"),
   shippingLine2: z.string().trim().optional().or(z.literal("")),
   shippingCity: z.string().trim().min(2, "Enter your city"),
   shippingState: z.string().trim().min(2, "Enter your state"),
-  shippingPostal: z.string().trim().min(3, "Enter a valid postal code"),
+  shippingPostal: z.string().trim().regex(postalPattern, "Enter a valid 6-digit PIN code"),
   paymentMethod: z.enum(["COD", "BANK_TRANSFER", "ONLINE"]),
   notes: z.string().trim().optional().or(z.literal("")),
   items: z.string().min(1),
@@ -47,20 +85,22 @@ export async function placeOrderAction(
     items: formData.get("items"),
   });
 
+  const values = valuesFromFormData(formData);
+
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Please check the form for errors" };
+    return { error: parsed.error.issues[0]?.message ?? "Please check the form for errors", values };
   }
 
   let rawItems: unknown;
   try {
     rawItems = JSON.parse(parsed.data.items);
   } catch {
-    return { error: "Your cart data is invalid. Please refresh and try again." };
+    return { error: "Your cart data is invalid. Please refresh and try again.", values };
   }
 
   const itemsParsed = z.array(cartItemSchema).safeParse(rawItems);
   if (!itemsParsed.success || itemsParsed.data.length === 0) {
-    return { error: "Your cart is empty." };
+    return { error: "Your cart is empty.", values };
   }
 
   const session = await getSession();
@@ -75,10 +115,10 @@ export async function placeOrderAction(
   for (const item of itemsParsed.data) {
     const product = productMap.get(item.productId);
     if (!product) {
-      return { error: "One of the items in your cart is no longer available." };
+      return { error: "One of the items in your cart is no longer available.", values };
     }
     if (product.stock < item.quantity) {
-      return { error: `Only ${product.stock} left in stock for "${product.title}".` };
+      return { error: `Only ${product.stock} left in stock for "${product.title}".`, values };
     }
   }
 

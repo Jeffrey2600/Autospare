@@ -62,37 +62,55 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="customerName">Full Name</Label>
-              <Input id="customerName" name="customerName" required defaultValue={defaultName} />
+              <Input id="customerName" name="customerName" required defaultValue={state.values?.customerName ?? defaultName} />
             </div>
             <div>
               <Label htmlFor="customerPhone">Phone Number</Label>
-              <Input id="customerPhone" name="customerPhone" type="tel" required />
+              <Input
+                id="customerPhone"
+                name="customerPhone"
+                type="tel"
+                inputMode="numeric"
+                placeholder="10-digit mobile number"
+                maxLength={10}
+                required
+                defaultValue={state.values?.customerPhone}
+              />
+              <p className="mt-1 text-xs text-slate-400">We&apos;ll send your order confirmation to this number.</p>
             </div>
           </div>
           <div className="mt-4">
-            <Label htmlFor="customerEmail">Email (optional)</Label>
-            <Input id="customerEmail" name="customerEmail" type="email" defaultValue={defaultEmail} />
+            <Label htmlFor="customerEmail">Email</Label>
+            <Input id="customerEmail" name="customerEmail" type="email" required defaultValue={state.values?.customerEmail ?? defaultEmail} />
           </div>
           <div className="mt-4">
             <Label htmlFor="shippingLine1">Address Line 1</Label>
-            <Input id="shippingLine1" name="shippingLine1" required />
+            <Input id="shippingLine1" name="shippingLine1" required defaultValue={state.values?.shippingLine1} />
           </div>
           <div className="mt-4">
             <Label htmlFor="shippingLine2">Address Line 2 (optional)</Label>
-            <Input id="shippingLine2" name="shippingLine2" />
+            <Input id="shippingLine2" name="shippingLine2" defaultValue={state.values?.shippingLine2} />
           </div>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
               <Label htmlFor="shippingCity">City</Label>
-              <Input id="shippingCity" name="shippingCity" required />
+              <Input id="shippingCity" name="shippingCity" required defaultValue={state.values?.shippingCity} />
             </div>
             <div>
               <Label htmlFor="shippingState">State</Label>
-              <Input id="shippingState" name="shippingState" required />
+              <Input id="shippingState" name="shippingState" required defaultValue={state.values?.shippingState} />
             </div>
             <div>
-              <Label htmlFor="shippingPostal">Postal Code</Label>
-              <Input id="shippingPostal" name="shippingPostal" required />
+              <Label htmlFor="shippingPostal">PIN Code</Label>
+              <Input
+                id="shippingPostal"
+                name="shippingPostal"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder="6-digit PIN"
+                required
+                defaultValue={state.values?.shippingPostal}
+              />
             </div>
           </div>
         </div>
@@ -101,11 +119,23 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
           <h2 className="mb-3 font-semibold text-slate-900">Payment Method</h2>
           <div className="space-y-2">
             <label className="flex items-center gap-2 rounded-md border border-slate-300 p-3 text-sm has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50">
-              <input type="radio" name="paymentMethod" value="COD" defaultChecked className="accent-brand-600" />
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="COD"
+                defaultChecked={!state.values?.paymentMethod || state.values.paymentMethod === "COD"}
+                className="accent-brand-600"
+              />
               Cash on Delivery / Pay at Store
             </label>
             <label className="flex items-center gap-2 rounded-md border border-slate-300 p-3 text-sm has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50">
-              <input type="radio" name="paymentMethod" value="BANK_TRANSFER" className="accent-brand-600" />
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="BANK_TRANSFER"
+                defaultChecked={state.values?.paymentMethod === "BANK_TRANSFER"}
+                className="accent-brand-600"
+              />
               Bank Transfer
             </label>
           </div>
@@ -113,7 +143,13 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
 
         <div>
           <Label htmlFor="notes">Order Notes (optional)</Label>
-          <Textarea id="notes" name="notes" rows={3} placeholder="Vehicle model, preferred delivery time, etc." />
+          <Textarea
+            id="notes"
+            name="notes"
+            rows={3}
+            placeholder="Vehicle model, preferred delivery time, etc."
+            defaultValue={state.values?.notes}
+          />
         </div>
 
         {state.error ? <FieldError>{state.error}</FieldError> : null}
