@@ -160,21 +160,37 @@ gateway's checkout step in `src/lib/actions/orders.ts` (`placeOrderAction`)
 and `src/components/storefront/CheckoutForm.tsx` — the `ONLINE` payment
 method already exists in the database schema as a placeholder.
 
-**Order SMS notifications — activate with a real provider**
-Every successful order already calls `notifyOrderPlaced()`
-(`src/lib/sms.ts`), which sends a confirmation SMS to the customer's phone
-and an alert to the shop's phone (`ADMIN_NOTIFY_PHONE`, defaults to
-`9894705498`). Until you set `SMS_PROVIDER` in `.env`, messages are only
-logged to the server console — no SMS account is required to keep
-developing. To actually send SMS:
-- **Twilio**: set `SMS_PROVIDER="twilio"` plus `TWILIO_ACCOUNT_SID`,
-  `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER` from your
-  [Twilio console](https://www.twilio.com/console).
-- **Any other gateway** (MSG91, Fast2SMS, TextLocal, etc.): set
-  `SMS_PROVIDER="webhook"` and `SMS_WEBHOOK_URL` to an endpoint (e.g. a
-  small serverless function) that receives `{ "to": "+91...", "message":
-  "..." }` as JSON and forwards it to your provider's API.
-See `.env.example` for the full list of variables.
+**Order notifications on WhatsApp — activate with a real provider**
+Every successful order calls `notifyOrderPlaced()`
+(`src/lib/notifications.ts`), which sends the full order details — items,
+totals, payment method and delivery address — to the customer's WhatsApp
+and to the shop owner's WhatsApp (`ADMIN_NOTIFY_PHONE`, defaults to
+`9894705498`).
+
+Until you set `WHATSAPP_PROVIDER` in `.env`, messages are printed to the
+server console instead of being sent, and checkout still works normally.
+To actually deliver messages, pick one:
+- **`"meta"`** — [WhatsApp Cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api):
+  set `WHATSAPP_PHONE_NUMBER_ID` and `WHATSAPP_ACCESS_TOKEN`.
+- **`"twilio"`** — set `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` and
+  `TWILIO_WHATSAPP_FROM`. Twilio's sandbox is the quickest way to test.
+- **`"webhook"`** — set `WHATSAPP_WEBHOOK_URL` to your own endpoint that
+  receives `{ "to": "91…", "message": "…" }` and forwards it to an Indian
+  BSP such as AiSensy, Interakt, Gupshup or Wati.
+
+> **Important:** WhatsApp only lets a business send free-form messages to
+> someone who messaged it in the last 24 hours. For order confirmations
+> going to new customers you need an **approved message template** — create
+> one in your provider's dashboard and put its name in
+> `WHATSAPP_TEMPLATE_NAME`. This is a WhatsApp platform rule, not a limit
+> of this app.
+
+Regardless of setup, the admin order page always has working
+**"WhatsApp customer"**, **"Call"** and **"Send copy to my WhatsApp"**
+buttons — those use click-to-chat links and need no account at all.
+
+SMS can be enabled alongside WhatsApp with `SMS_PROVIDER`
+(`"twilio"` or `"webhook"`); see `.env.example`.
 
 **Email notifications**
 Order confirmations currently only show on-screen and in Order History —
