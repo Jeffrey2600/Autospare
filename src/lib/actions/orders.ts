@@ -4,6 +4,7 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 import { generateOrderNumber } from "@/lib/utils";
+import { notifyOrderPlaced } from "@/lib/sms";
 
 export type CheckoutFormState = {
   error: string | null;
@@ -178,6 +179,17 @@ export async function placeOrderAction(
 
     return created;
   });
+
+  await notifyOrderPlaced(
+    {
+      id: order.id,
+      orderNumber: order.orderNumber,
+      customerName: order.customerName,
+      customerPhone: order.customerPhone,
+      total: order.total,
+    },
+    itemsParsed.data.length
+  ).catch((error) => console.error("Order placed but SMS notification failed:", error));
 
   return { error: null, orderNumber: order.orderNumber };
 }

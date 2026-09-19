@@ -19,7 +19,9 @@ orders and site content.
 - Home page with hero banners, category tiles, featured products, new arrivals
 - Product catalog with search, category/vehicle-type/brand filters, price range, sorting, pagination
 - Product detail pages with image gallery, stock status, compatibility info, and customer reviews
-- Cart, checkout (Cash on Delivery / Bank Transfer), order confirmation
+- Cart, checkout (Cash on Delivery / Bank Transfer) with required contact
+  and shipping details, order confirmation, SMS alerts to the customer and
+  shop owner on every order (see "Order SMS notifications" below)
 - Customer accounts: register/login, order history, order detail
 - Contact form, About page, Shipping/Returns, Terms, Privacy pages
 - WhatsApp chat button, SEO metadata, sitemap.xml, robots.txt
@@ -157,6 +159,22 @@ ready to accept online payments (Razorpay, Stripe, etc.), add the
 gateway's checkout step in `src/lib/actions/orders.ts` (`placeOrderAction`)
 and `src/components/storefront/CheckoutForm.tsx` — the `ONLINE` payment
 method already exists in the database schema as a placeholder.
+
+**Order SMS notifications — activate with a real provider**
+Every successful order already calls `notifyOrderPlaced()`
+(`src/lib/sms.ts`), which sends a confirmation SMS to the customer's phone
+and an alert to the shop's phone (`ADMIN_NOTIFY_PHONE`, defaults to
+`9894705498`). Until you set `SMS_PROVIDER` in `.env`, messages are only
+logged to the server console — no SMS account is required to keep
+developing. To actually send SMS:
+- **Twilio**: set `SMS_PROVIDER="twilio"` plus `TWILIO_ACCOUNT_SID`,
+  `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER` from your
+  [Twilio console](https://www.twilio.com/console).
+- **Any other gateway** (MSG91, Fast2SMS, TextLocal, etc.): set
+  `SMS_PROVIDER="webhook"` and `SMS_WEBHOOK_URL` to an endpoint (e.g. a
+  small serverless function) that receives `{ "to": "+91...", "message":
+  "..." }` as JSON and forwards it to your provider's API.
+See `.env.example` for the full list of variables.
 
 **Email notifications**
 Order confirmations currently only show on-screen and in Order History —
