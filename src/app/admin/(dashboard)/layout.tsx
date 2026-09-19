@@ -1,32 +1,8 @@
 import Link from "next/link";
-import {
-  LayoutDashboard,
-  Package,
-  FolderTree,
-  Tag,
-  ShoppingBag,
-  Star,
-  MessageSquare,
-  Users,
-  Settings,
-  Image as ImageIcon,
-  ExternalLink,
-} from "lucide-react";
+import { ExternalLink, Menu, Wrench } from "lucide-react";
 import { getSession } from "@/lib/auth";
 import { AdminLogoutButton } from "@/components/admin/AdminLogoutButton";
-
-const navItems = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/products", label: "Products", icon: Package },
-  { href: "/admin/categories", label: "Categories", icon: FolderTree },
-  { href: "/admin/brands", label: "Brands", icon: Tag },
-  { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
-  { href: "/admin/reviews", label: "Reviews", icon: Star },
-  { href: "/admin/messages", label: "Messages", icon: MessageSquare },
-  { href: "/admin/customers", label: "Customers", icon: Users },
-  { href: "/admin/banners", label: "Banners", icon: ImageIcon },
-  { href: "/admin/settings", label: "Settings", icon: Settings },
-];
+import { AdminNavLinks } from "@/components/admin/AdminNavLinks";
 
 export default async function AdminDashboardLayout({
   children,
@@ -38,48 +14,51 @@ export default async function AdminDashboardLayout({
   return (
     <div className="flex min-h-screen bg-slate-50">
       <aside className="hidden w-64 shrink-0 flex-col border-r border-slate-200 bg-white md:flex">
-        <div className="flex h-16 items-center border-b border-slate-200 px-6">
+        <div className="flex h-16 items-center gap-2 border-b border-slate-200 px-5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
+            <Wrench className="h-4 w-4" />
+          </span>
           <span className="font-bold text-slate-900">AutoSpare Admin</span>
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            >
-              <item.icon className="h-4 w-4" />
-              {item.label}
-            </Link>
-          ))}
+          <AdminNavLinks />
         </nav>
         <div className="border-t border-slate-200 p-3">
-          <Link href="/" target="_blank" className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">
-            <ExternalLink className="h-4 w-4" /> View Store
+          <Link
+            href="/"
+            target="_blank"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100"
+          >
+            <ExternalLink className="h-5 w-5" /> View Store
           </Link>
-          <div className="mt-1 flex items-center justify-between rounded-md px-3 py-2">
-            <span className="truncate text-sm text-slate-500">{session?.name}</span>
+          <div className="mt-1 px-3 py-2">
+            <p className="truncate text-sm font-medium text-slate-700">{session?.name}</p>
+            <p className="truncate text-xs text-slate-400">Signed in as admin</p>
           </div>
           <AdminLogoutButton />
         </div>
       </aside>
 
-      <div className="flex-1">
-        <details className="border-b border-slate-200 bg-white md:hidden">
-          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 font-bold text-slate-900">
-            AutoSpare Admin
+      <div className="min-w-0 flex-1">
+        <details className="group border-b border-slate-200 bg-white md:hidden">
+          <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 text-slate-700">
+              <Menu className="h-5 w-5" />
+            </span>
+            <span className="font-bold text-slate-900">AutoSpare Admin</span>
+            <span className="ml-auto text-xs font-medium text-slate-400 group-open:hidden">
+              Tap for menu
+            </span>
           </summary>
           <nav className="space-y-1 border-t border-slate-100 p-3">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100"
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
-              </Link>
-            ))}
+            <AdminNavLinks />
+            <Link
+              href="/"
+              target="_blank"
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100"
+            >
+              <ExternalLink className="h-5 w-5" /> View Store
+            </Link>
             <AdminLogoutButton />
           </nav>
         </details>

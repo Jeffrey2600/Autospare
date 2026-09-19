@@ -1,9 +1,11 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ShoppingBag } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { formatDate, formatPrice } from "@/lib/utils";
 import { OrderStatusBadge } from "@/components/ui/OrderStatusBadge";
 import { Input } from "@/components/ui/Field";
+import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Orders" };
@@ -29,7 +31,10 @@ export default async function AdminOrdersPage({
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-slate-900">Orders</h1>
+      <h1 className="text-2xl font-bold text-slate-900">Orders</h1>
+      <p className="mt-1 text-sm text-slate-500">
+        Tap an order to see full details and message the customer on WhatsApp.
+      </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <Link
@@ -54,47 +59,93 @@ export default async function AdminOrdersPage({
         <Input name="q" placeholder="Search order #, name or phone..." defaultValue={q} />
       </form>
 
-      <div className="mt-4 overflow-x-auto rounded-lg border border-slate-200 bg-white">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
-            <tr>
-              <th className="px-4 py-3">Order #</th>
-              <th className="px-4 py-3">Customer</th>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3">Total</th>
-              <th className="px-4 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
+      {orders.length === 0 ? (
+        <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
+          <ShoppingBag className="mx-auto h-10 w-10 text-slate-300" />
+          <p className="mt-3 font-semibold text-slate-700">No orders found</p>
+          <p className="mt-1 text-sm text-slate-500">
+            {status || q
+              ? "Try clearing the filter or search."
+              : "New orders appear here and are sent to your WhatsApp automatically."}
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Mobile: card list */}
+          <ul className="mt-4 space-y-3 md:hidden">
             {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-slate-50">
-                <td className="px-4 py-3">
-                  <Link href={`/admin/orders/${order.id}`} className="font-medium text-brand-700 hover:underline">
-                    {order.orderNumber}
-                  </Link>
-                </td>
-                <td className="px-4 py-3 text-slate-600">
-                  {order.customerName}
-                  <br />
-                  <span className="text-xs text-slate-400">{order.customerPhone}</span>
-                </td>
-                <td className="px-4 py-3 text-slate-600">{formatDate(order.createdAt)}</td>
-                <td className="px-4 py-3 text-slate-600">{formatPrice(order.total)}</td>
-                <td className="px-4 py-3">
+              <li key={order.id} className="rounded-xl border border-slate-200 bg-white p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-slate-900">{order.orderNumber}</p>
+                    <p className="text-sm text-slate-600">{order.customerName}</p>
+                    <p className="text-xs text-slate-400">{order.customerPhone}</p>
+                  </div>
                   <OrderStatusBadge status={order.status} />
-                </td>
-              </tr>
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-slate-900">{formatPrice(order.total)}</p>
+                    <p className="text-xs text-slate-400">{formatDate(order.createdAt)}</p>
+                  </div>
+                  <Link href={`/admin/orders/${order.id}`}>
+                    <Button variant="outline" size="sm">
+                      View Details
+                    </Button>
+                  </Link>
+                </div>
+              </li>
             ))}
-            {orders.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-slate-400">
-                  No orders found.
-                </td>
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
-      </div>
+          </ul>
+
+          {/* Desktop: table */}
+          <div className="mt-4 hidden overflow-x-auto rounded-xl border border-slate-200 bg-white md:block">
+            <table className="w-full text-sm">
+              <thead className="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
+                <tr>
+                  <th className="px-4 py-3">Order #</th>
+                  <th className="px-4 py-3">Customer</th>
+                  <th className="px-4 py-3">Date</th>
+                  <th className="px-4 py-3">Total</th>
+                  <th className="px-4 py-3">Status</th>
+                  <th className="px-4 py-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {orders.map((order) => (
+                  <tr key={order.id} className="hover:bg-slate-50/60">
+                    <td className="px-4 py-3">
+                      <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="font-medium text-brand-700 hover:underline"
+                      >
+                        {order.orderNumber}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">
+                      {order.customerName}
+                      <br />
+                      <span className="text-xs text-slate-400">{order.customerPhone}</span>
+                    </td>
+                    <td className="px-4 py-3 text-slate-600">{formatDate(order.createdAt)}</td>
+                    <td className="px-4 py-3 text-slate-600">{formatPrice(order.total)}</td>
+                    <td className="px-4 py-3">
+                      <OrderStatusBadge status={order.status} />
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <Link href={`/admin/orders/${order.id}`}>
+                        <Button variant="outline" size="sm">
+                          View Details
+                        </Button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 }

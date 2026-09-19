@@ -1,5 +1,4 @@
 import "server-only";
-import { formatPrice } from "@/lib/utils";
 
 type SmsMessage = { to: string; body: string };
 type SmsResult = { ok: boolean; skipped?: boolean; error?: string };
@@ -104,26 +103,3 @@ export async function sendSms(message: SmsMessage): Promise<SmsResult> {
   }
 }
 
-type OrderNotification = {
-  id: string;
-  orderNumber: string;
-  customerName: string;
-  customerPhone: string;
-  total: number;
-};
-
-export async function notifyOrderPlaced(order: OrderNotification, itemCount: number) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  const adminPhone = process.env.ADMIN_NOTIFY_PHONE ?? "9894705498";
-
-  const customerBody = `AutoSpare Parts: Thank you ${order.customerName}! Your order ${order.orderNumber} for ${formatPrice(order.total)} has been placed. Track it: ${siteUrl}/order-confirmation/${order.orderNumber}`;
-
-  const adminBody = `New order ${order.orderNumber} from ${order.customerName} (${order.customerPhone}) — ${itemCount} item(s), ${formatPrice(order.total)}. View: ${siteUrl}/admin/orders/${order.id}`;
-
-  const [customer, admin] = await Promise.allSettled([
-    sendSms({ to: order.customerPhone, body: customerBody }),
-    sendSms({ to: adminPhone, body: adminBody }),
-  ]);
-
-  return { customer, admin };
-}

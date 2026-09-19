@@ -24,16 +24,21 @@ export default async function AdminCategoriesPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-slate-900">Categories</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900">Categories</h1>
+          <p className="mt-1 text-sm text-slate-500">
+            Group your parts so customers can browse them easily.
+          </p>
+        </div>
         <Link href="/admin/categories/new">
-          <Button>
-            <Plus className="h-4 w-4" /> Add Category
+          <Button size="lg">
+            <Plus className="h-5 w-5" /> Add Category
           </Button>
         </Link>
       </div>
 
-      <div className="mt-4 divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+      <div className="mt-4 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white">
         {topLevel.map((cat) => (
           <div key={cat.id}>
             <CategoryRow category={cat} />
@@ -66,7 +71,7 @@ function CategoryRow({
   const canDelete = category._count.products === 0 && category._count.children === 0;
 
   return (
-    <div className={`flex items-center justify-between gap-3 px-4 py-3 ${isChild ? "pl-10" : ""}`}>
+    <div className={`flex flex-wrap items-center justify-between gap-3 px-4 py-3 ${isChild ? "pl-10" : ""}`}>
       <div>
         <p className="font-medium text-slate-800">{category.name}</p>
         <p className="text-xs text-slate-400">
@@ -75,22 +80,27 @@ function CategoryRow({
         </p>
       </div>
       <div className="flex items-center gap-2">
-        <Link href={`/admin/categories/${category.id}/edit`} className="rounded-md p-2 text-slate-500 hover:bg-slate-100">
-          <Pencil className="h-4 w-4" />
+        <Link href={`/admin/categories/${category.id}/edit`}>
+          <Button variant="outline" size="sm">
+            <Pencil className="h-4 w-4" /> Edit
+          </Button>
         </Link>
         {canDelete ? (
           <form action={deleteCategoryAction}>
             <input type="hidden" name="id" value={category.id} />
             <ConfirmSubmitButton
               message={`Delete "${category.name}"?`}
-              className="rounded-md p-2 text-slate-500 hover:bg-red-50 hover:text-red-600"
+              className="inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-4 w-4" /> Delete
             </ConfirmSubmitButton>
           </form>
         ) : (
-          <span className="p-2 text-slate-200" title="Move or remove products/subcategories first">
-            <Trash2 className="h-4 w-4" />
+          <span
+            className="inline-flex h-8 cursor-not-allowed items-center gap-1.5 rounded-md border border-slate-200 px-3 text-sm font-medium text-slate-300"
+            title="Move or remove its products/subcategories first"
+          >
+            <Trash2 className="h-4 w-4" /> Delete
           </span>
         )}
       </div>

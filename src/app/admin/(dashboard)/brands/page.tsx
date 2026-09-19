@@ -16,12 +16,15 @@ export default async function AdminBrandsPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-slate-900">Brands</h1>
-      <div className="mt-4 rounded-lg border border-slate-200 bg-white p-5">
+      <h1 className="text-2xl font-bold text-slate-900">Brands</h1>
+      <p className="mt-1 text-sm text-slate-500">
+        Add the brands you stock so customers can filter by them.
+      </p>
+      <div className="mt-4 rounded-xl border border-slate-200 bg-white p-5">
         <BrandForm />
       </div>
 
-      <div className="mt-4 divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+      <div className="mt-4 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white">
         {brands.map((brand) => (
           <div key={brand.id} className="flex items-center justify-between gap-3 px-4 py-3">
             <div className="flex items-center gap-3">
@@ -38,14 +41,17 @@ export default async function AdminBrandsPage() {
                 <input type="hidden" name="id" value={brand.id} />
                 <ConfirmSubmitButton
                   message={`Delete brand "${brand.name}"?`}
-                  className="rounded-md p-2 text-slate-500 hover:bg-red-50 hover:text-red-600"
+                  className="inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-4 w-4" /> Delete
                 </ConfirmSubmitButton>
               </form>
             ) : (
-              <span className="p-2 text-slate-200">
-                <Trash2 className="h-4 w-4" />
+              <span
+                className="inline-flex h-8 cursor-not-allowed items-center gap-1.5 rounded-md border border-slate-200 px-3 text-sm font-medium text-slate-300"
+                title="Move or remove its products first"
+              >
+                <Trash2 className="h-4 w-4" /> Delete
               </span>
             )}
           </div>
