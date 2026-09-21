@@ -10,7 +10,7 @@ export default async function CheckoutPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="mb-6 text-2xl font-bold text-slate-900">Checkout</h1>
+      <h1 className="mb-6 text-2xl font-bold text-ink-900">Checkout</h1>
       <CheckoutForm
         defaultName={session?.name}
         defaultEmail={session?.email}

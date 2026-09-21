@@ -21,7 +21,7 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
         type="button"
         aria-label="Open menu"
         onClick={() => setOpen(true)}
-        className="rounded-md p-2 text-slate-700 hover:bg-slate-100"
+        className="rounded-md p-2 text-ink-700 hover:bg-ink-100"
       >
         <Menu className="h-6 w-6" />
       </button>
@@ -39,7 +39,7 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
                 type="button"
                 aria-label="Close menu"
                 onClick={() => setOpen(false)}
-                className="rounded-md p-2 hover:bg-slate-100"
+                className="rounded-md p-2 hover:bg-ink-100"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -47,7 +47,7 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
             <nav className="flex flex-col gap-1">
               <Link
                 href="/products"
-                className="rounded-md px-2 py-2 font-medium hover:bg-slate-100"
+                className="rounded-md px-2 py-2 font-medium hover:bg-ink-100"
                 onClick={() => setOpen(false)}
               >
                 All Products
@@ -57,7 +57,7 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
                   <Link
                     key={cat.id}
                     href={`/products?category=${cat.slug}`}
-                    className="rounded-md px-2 py-2 font-medium hover:bg-slate-100"
+                    className="rounded-md px-2 py-2 font-medium hover:bg-ink-100"
                     onClick={() => setOpen(false)}
                   >
                     {cat.name}
@@ -66,7 +66,7 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
                   <div key={cat.id}>
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between rounded-md px-2 py-2 text-left font-medium hover:bg-slate-100"
+                      className="flex w-full items-center justify-between rounded-md px-2 py-2 text-left font-medium hover:bg-ink-100"
                       onClick={() =>
                         setExpanded(expanded === cat.id ? null : cat.id)
                       }
@@ -77,10 +77,10 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
                       />
                     </button>
                     {expanded === cat.id ? (
-                      <div className="ml-3 flex flex-col border-l border-slate-200 pl-3">
+                      <div className="ml-3 flex flex-col border-l border-ink-200 pl-3">
                         <Link
                           href={`/products?category=${cat.slug}`}
-                          className="rounded-md px-2 py-2 text-sm text-slate-600 hover:bg-slate-100"
+                          className="rounded-md px-2 py-2 text-sm text-ink-600 hover:bg-ink-100"
                           onClick={() => setOpen(false)}
                         >
                           All {cat.name}
@@ -89,7 +89,7 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
                           <Link
                             key={child.id}
                             href={`/products?category=${child.slug}`}
-                            className="rounded-md px-2 py-2 text-sm text-slate-600 hover:bg-slate-100"
+                            className="rounded-md px-2 py-2 text-sm text-ink-600 hover:bg-ink-100"
                             onClick={() => setOpen(false)}
                           >
                             {child.name}
@@ -102,14 +102,14 @@ export function MobileNav({ categories }: { categories: NavCategory[] }) {
               )}
               <Link
                 href="/about"
-                className="rounded-md px-2 py-2 hover:bg-slate-100"
+                className="rounded-md px-2 py-2 hover:bg-ink-100"
                 onClick={() => setOpen(false)}
               >
                 About Us
               </Link>
               <Link
                 href="/contact"
-                className="rounded-md px-2 py-2 hover:bg-slate-100"
+                className="rounded-md px-2 py-2 hover:bg-ink-100"
                 onClick={() => setOpen(false)}
               >
                 Contact

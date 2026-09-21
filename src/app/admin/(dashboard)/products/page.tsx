@@ -29,8 +29,8 @@ export default async function AdminProductsPage({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Products</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold tracking-tight text-ink-950">Products</h1>
+          <p className="mt-1 text-sm text-ink-500">
             {products.length} product{products.length === 1 ? "" : "s"} in your catalog. Tap Edit to
             change photos, price, stock or description.
           </p>
@@ -47,12 +47,12 @@ export default async function AdminProductsPage({
       </form>
 
       {products.length === 0 ? (
-        <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-          <Package className="mx-auto h-10 w-10 text-slate-300" />
-          <p className="mt-3 font-semibold text-slate-700">
+        <div className="mt-4 rounded-2xl border border-dashed border-ink-300 bg-white px-6 py-16 text-center">
+          <Package className="mx-auto h-10 w-10 text-ink-300" />
+          <p className="mt-3 font-semibold text-ink-700">
             {q ? "No products match your search" : "No products yet"}
           </p>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-ink-500">
             {q ? "Try a different title or SKU." : "Add your first product to show it on the store."}
           </p>
           {!q ? (
@@ -68,9 +68,9 @@ export default async function AdminProductsPage({
           {/* Mobile: card list (a table is unreadable on a phone) */}
           <ul className="mt-4 space-y-3 md:hidden">
             {products.map((product) => (
-              <li key={product.id} className="rounded-xl border border-slate-200 bg-white p-4">
+              <li key={product.id} className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-4">
                 <div className="flex gap-3">
-                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl ring-1 ring-ink-200/60 bg-ink-50">
                     {product.images[0] ? (
                       <Image
                         src={product.images[0].url}
@@ -82,9 +82,9 @@ export default async function AdminProductsPage({
                     ) : null}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-slate-800">{product.title}</p>
-                    <p className="text-xs text-slate-400">{product.sku}</p>
-                    <p className="mt-1 text-sm text-slate-600">
+                    <p className="font-semibold text-ink-800">{product.title}</p>
+                    <p className="text-xs text-ink-400">{product.sku}</p>
+                    <p className="mt-1 text-sm text-ink-600">
                       {formatPrice(product.price)} ·{" "}
                       <span
                         className={
@@ -112,8 +112,8 @@ export default async function AdminProductsPage({
                       type="submit"
                       className={
                         product.isActive
-                          ? "rounded-md bg-green-100 px-3 py-2 text-xs font-semibold text-green-700"
-                          : "rounded-md bg-slate-200 px-3 py-2 text-xs font-semibold text-slate-600"
+                          ? "rounded-xl bg-green-100 px-3 py-2.5 text-xs font-semibold text-green-700 transition-colors hover:bg-green-200"
+                          : "rounded-xl bg-ink-200 px-3 py-2.5 text-xs font-semibold text-ink-600 transition-colors hover:bg-ink-300"
                       }
                     >
                       {product.isActive ? "Active" : "Hidden"}
@@ -123,7 +123,7 @@ export default async function AdminProductsPage({
                     <input type="hidden" name="id" value={product.id} />
                     <ConfirmSubmitButton
                       message={`Delete "${product.title}"? This cannot be undone.`}
-                      className="rounded-md border border-slate-300 p-2 text-slate-500 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                      className="rounded-xl border border-ink-200 p-2.5 text-ink-500 shadow-xs transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600"
                     >
                       <Trash2 className="h-4 w-4" />
                     </ConfirmSubmitButton>
@@ -134,9 +134,9 @@ export default async function AdminProductsPage({
           </ul>
 
           {/* Desktop: table */}
-          <div className="mt-4 hidden overflow-x-auto rounded-xl border border-slate-200 bg-white md:block">
+          <div className="mt-4 hidden overflow-x-auto rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 md:block">
             <table className="w-full text-sm">
-              <thead className="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
+              <thead className="bg-ink-50/80 text-left text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-500">
                 <tr>
                   <th className="px-4 py-3">Product</th>
                   <th className="px-4 py-3">Category</th>
@@ -146,12 +146,12 @@ export default async function AdminProductsPage({
                   <th className="px-4 py-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-ink-100">
                 {products.map((product) => (
-                  <tr key={product.id} className="hover:bg-slate-50/60">
+                  <tr key={product.id} className="hover:bg-ink-50/60">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+                        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl ring-1 ring-ink-200/60 bg-ink-50">
                           {product.images[0] ? (
                             <Image
                               src={product.images[0].url}
@@ -163,13 +163,13 @@ export default async function AdminProductsPage({
                           ) : null}
                         </div>
                         <div>
-                          <p className="font-medium text-slate-800">{product.title}</p>
-                          <p className="text-xs text-slate-400">{product.sku}</p>
+                          <p className="font-medium text-ink-800">{product.title}</p>
+                          <p className="text-xs text-ink-400">{product.sku}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-slate-600">{product.category.name}</td>
-                    <td className="px-4 py-3 text-slate-600">{formatPrice(product.price)}</td>
+                    <td className="px-4 py-3 text-ink-600">{product.category.name}</td>
+                    <td className="px-4 py-3 text-ink-600">{formatPrice(product.price)}</td>
                     <td className="px-4 py-3">
                       <span
                         className={
@@ -177,7 +177,7 @@ export default async function AdminProductsPage({
                             ? "font-medium text-red-600"
                             : product.stock <= 5
                               ? "font-medium text-amber-600"
-                              : "text-slate-600"
+                              : "text-ink-600"
                         }
                       >
                         {product.stock}
@@ -191,8 +191,8 @@ export default async function AdminProductsPage({
                           title="Click to show/hide this product on the store"
                           className={
                             product.isActive
-                              ? "rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700 hover:bg-green-200"
-                              : "rounded-full bg-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-300"
+                              ? "rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700 transition-colors hover:bg-green-200"
+                              : "rounded-full bg-ink-200 px-3 py-1 text-xs font-semibold text-ink-600 transition-colors hover:bg-ink-300"
                           }
                         >
                           {product.isActive ? "Active" : "Hidden"}
@@ -210,7 +210,7 @@ export default async function AdminProductsPage({
                           <input type="hidden" name="id" value={product.id} />
                           <ConfirmSubmitButton
                             message={`Delete "${product.title}"? This cannot be undone.`}
-                            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                            className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-ink-200 px-3.5 text-sm font-semibold text-ink-600 shadow-xs transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600"
                           >
                             <Trash2 className="h-4 w-4" /> Delete
                           </ConfirmSubmitButton>

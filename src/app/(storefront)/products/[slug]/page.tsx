@@ -43,115 +43,136 @@ export default async function ProductDetailPage({
       : null;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
-      <nav className="mb-4 text-sm text-slate-500">
-        <Link href="/" className="hover:text-brand-700">Home</Link>
-        {" / "}
-        <Link href={`/products?category=${product.category.slug}`} className="hover:text-brand-700">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <nav className="mb-6 flex flex-wrap items-center gap-1.5 text-sm text-ink-500">
+        <Link href="/" className="transition-colors hover:text-brand-700">Home</Link>
+        <span className="text-ink-300">/</span>
+        <Link
+          href={`/products?category=${product.category.slug}`}
+          className="transition-colors hover:text-brand-700"
+        >
           {product.category.name}
         </Link>
-        {" / "}
-        <span className="text-slate-700">{product.title}</span>
+        <span className="text-ink-300">/</span>
+        <span className="font-medium text-ink-700">{product.title}</span>
       </nav>
 
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
-        <ImageGallery images={product.images} title={product.title} />
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12">
+        <div className="lg:sticky lg:top-40 lg:self-start">
+          <ImageGallery images={product.images} title={product.title} />
+        </div>
 
-        <div>
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-ink-200/60 sm:p-8">
           {product.brand ? (
-            <p className="text-sm font-medium text-brand-700">{product.brand.name}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-brand-600">
+              {product.brand.name}
+            </p>
           ) : null}
-          <h1 className="mt-1 text-2xl font-bold text-slate-900">{product.title}</h1>
+          <h1 className="mt-2 text-3xl font-bold leading-tight tracking-tight text-ink-950">
+            {product.title}
+          </h1>
 
-          <div className="mt-2 flex items-center gap-3">
+          <div className="mt-3 flex items-center gap-3">
             {product.reviews.length > 0 ? (
               <>
                 <StarRating rating={avgRating} />
-                <span className="text-sm text-slate-500">({product.reviews.length} reviews)</span>
+                <span className="text-sm text-ink-500">({product.reviews.length} reviews)</span>
               </>
             ) : (
-              <span className="text-sm text-slate-400">No reviews yet</span>
+              <span className="text-sm text-ink-400">No reviews yet</span>
             )}
           </div>
 
-          <div className="mt-4 flex items-baseline gap-3">
-            <span className="text-3xl font-bold text-slate-900">{formatPrice(product.price)}</span>
+          <div className="mt-5 flex flex-wrap items-baseline gap-3">
+            <span className="text-4xl font-bold tracking-tight text-ink-950">
+              {formatPrice(product.price)}
+            </span>
             {product.compareAtPrice && product.compareAtPrice > product.price ? (
               <>
-                <span className="text-lg text-slate-400 line-through">{formatPrice(product.compareAtPrice)}</span>
-                <span className="rounded bg-brand-100 px-2 py-0.5 text-sm font-semibold text-brand-700">
+                <span className="text-lg text-ink-400 line-through">
+                  {formatPrice(product.compareAtPrice)}
+                </span>
+                <span className="rounded-lg bg-brand-50 px-2.5 py-1 text-sm font-bold text-brand-700">
                   Save {discount}%
                 </span>
               </>
             ) : null}
           </div>
 
-          <p className="mt-1 text-sm">
+          <p className="mt-3">
             {product.stock > 0 ? (
-              <span className="text-green-600">In stock ({product.stock} available)</span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                In stock · {product.stock} available
+              </span>
             ) : (
-              <span className="text-red-600">Out of stock</span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                Out of stock
+              </span>
             )}
           </p>
 
           {product.shortDescription ? (
-            <p className="mt-4 text-slate-600">{product.shortDescription}</p>
+            <p className="mt-5 leading-relaxed text-ink-600">{product.shortDescription}</p>
           ) : null}
 
-          <div className="mt-6">
+          <div className="mt-7">
             <ProductActions product={product} image={image} />
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-3 rounded-lg bg-slate-50 p-4 text-sm sm:grid-cols-2">
-            <div className="flex items-center gap-2 text-slate-600">
-              <Truck className="h-4 w-4 shrink-0" /> Fast local dispatch
+          <div className="mt-7 grid grid-cols-1 gap-3 rounded-2xl bg-ink-50 p-4 text-sm sm:grid-cols-2">
+            <div className="flex items-center gap-2.5 text-ink-600">
+              <Truck className="h-4 w-4 shrink-0 text-brand-600" /> Fast local dispatch
             </div>
-            <div className="flex items-center gap-2 text-slate-600">
-              <ShieldCheck className="h-4 w-4 shrink-0" /> Quality checked parts
+            <div className="flex items-center gap-2.5 text-ink-600">
+              <ShieldCheck className="h-4 w-4 shrink-0 text-brand-600" /> Quality checked parts
             </div>
           </div>
 
-          <dl className="mt-6 space-y-2 border-t border-slate-200 pt-4 text-sm">
-            <div className="flex justify-between">
-              <dt className="text-slate-500">SKU</dt>
-              <dd className="font-medium text-slate-700">{product.sku}</dd>
-            </div>
-            <div className="flex justify-between">
-              <dt className="text-slate-500">Vehicle Type</dt>
-              <dd className="font-medium text-slate-700">
-                {product.vehicleType === "CAR" ? "Car" : product.vehicleType === "BIKE" ? "Bike" : "Universal"}
-              </dd>
-            </div>
+          <dl className="mt-7 divide-y divide-ink-100 border-t border-ink-100 text-sm">
+            <SpecRow label="SKU" value={product.sku} />
+            <SpecRow
+              label="Vehicle Type"
+              value={
+                product.vehicleType === "CAR"
+                  ? "Car"
+                  : product.vehicleType === "BIKE"
+                    ? "Bike"
+                    : "Universal"
+              }
+            />
             {product.compatibility ? (
-              <div className="flex justify-between gap-4">
-                <dt className="shrink-0 text-slate-500">Compatible With</dt>
-                <dd className="text-right font-medium text-slate-700">{product.compatibility}</dd>
-              </div>
+              <SpecRow label="Compatible With" value={product.compatibility} />
             ) : null}
           </dl>
         </div>
       </div>
 
-      <div className="mt-12 border-t border-slate-200 pt-8">
-        <h2 className="mb-3 text-lg font-bold text-slate-900">Description</h2>
-        <p className="whitespace-pre-line text-slate-600">{product.description}</p>
+      <div className="mt-10 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-ink-200/60 sm:p-8">
+        <h2 className="text-xl font-bold tracking-tight text-ink-950">Description</h2>
+        <p className="mt-4 max-w-3xl whitespace-pre-line leading-relaxed text-ink-600">
+          {product.description}
+        </p>
       </div>
 
-      <div className="mt-12 border-t border-slate-200 pt-8">
-        <h2 className="mb-4 text-lg font-bold text-slate-900">Customer Reviews</h2>
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="space-y-4">
+      <div className="mt-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-ink-200/60 sm:p-8">
+        <h2 className="text-xl font-bold tracking-tight text-ink-950">Customer Reviews</h2>
+        <div className="mt-5 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <div className="space-y-5">
             {product.reviews.length === 0 ? (
-              <p className="text-sm text-slate-500">Be the first to review this product.</p>
+              <p className="text-sm text-ink-500">Be the first to review this product.</p>
             ) : (
               product.reviews.map((review) => (
-                <div key={review.id} className="border-b border-slate-100 pb-4">
+                <div key={review.id} className="rounded-2xl bg-ink-50 p-4">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-slate-800">{review.user.name}</span>
-                    <span className="text-xs text-slate-400">{formatDate(review.createdAt)}</span>
+                    <span className="font-semibold text-ink-900">{review.user.name}</span>
+                    <span className="text-xs text-ink-400">{formatDate(review.createdAt)}</span>
                   </div>
-                  <StarRating rating={review.rating} className="my-1" />
-                  {review.comment ? <p className="text-sm text-slate-600">{review.comment}</p> : null}
+                  <StarRating rating={review.rating} className="my-1.5" />
+                  {review.comment ? (
+                    <p className="text-sm leading-relaxed text-ink-600">{review.comment}</p>
+                  ) : null}
                 </div>
               ))
             )}
@@ -160,8 +181,8 @@ export default async function ProductDetailPage({
             {session ? (
               <ReviewForm productId={product.id} productSlug={product.slug} />
             ) : (
-              <p className="rounded-lg border border-dashed border-slate-300 p-4 text-sm text-slate-500">
-                <Link href="/login" className="font-medium text-brand-700 hover:underline">
+              <p className="rounded-2xl border border-dashed border-ink-300 p-5 text-sm text-ink-500">
+                <Link href="/login" className="font-semibold text-brand-700 hover:underline">
                   Log in
                 </Link>{" "}
                 to leave a review.
@@ -172,8 +193,8 @@ export default async function ProductDetailPage({
       </div>
 
       {related.length > 0 ? (
-        <div className="mt-12 border-t border-slate-200 pt-8">
-          <h2 className="mb-4 text-lg font-bold text-slate-900">Related Products</h2>
+        <div className="mt-12">
+          <h2 className="mb-6 text-2xl font-bold tracking-tight text-ink-950">You may also like</h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} />
@@ -181,6 +202,15 @@ export default async function ProductDetailPage({
           </div>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+function SpecRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between gap-6 py-3">
+      <dt className="shrink-0 text-ink-500">{label}</dt>
+      <dd className="text-right font-medium text-ink-800">{value}</dd>
     </div>
   );
 }

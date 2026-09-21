@@ -23,7 +23,7 @@ export default async function EditProductPage({
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-6 text-xl font-bold text-slate-900">Edit Product</h1>
+      <h1 className="mb-6 text-xl font-bold text-ink-900">Edit Product</h1>
       <ProductForm categories={categories} brands={brands} product={product} />
     </div>
   );

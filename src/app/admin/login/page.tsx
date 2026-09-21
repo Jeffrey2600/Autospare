@@ -11,10 +11,10 @@ export default function AdminLoginPage() {
   const [state, formAction, pending] = useActionState(adminLoginAction, initialState);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-sm rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
-        <h1 className="text-xl font-bold text-slate-900">Admin Login</h1>
-        <p className="mt-1 text-sm text-slate-500">Sign in to manage your store.</p>
+    <div className="flex min-h-screen items-center justify-center bg-ink-100 px-4">
+      <div className="w-full max-w-sm rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-8 shadow-sm">
+        <h1 className="text-2xl font-bold tracking-tight text-ink-950">Admin Login</h1>
+        <p className="mt-1 text-sm text-ink-500">Sign in to manage your store.</p>
         <form action={formAction} className="mt-6 space-y-4">
           <div>
             <Label htmlFor="email">Email</Label>

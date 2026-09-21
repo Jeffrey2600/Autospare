@@ -23,7 +23,7 @@ export function BannerForm({ banner }: { banner?: BannerDefaults }) {
   const [preview, setPreview] = useState<string | null>(banner?.image ?? null);
 
   return (
-    <form action={formAction} className="space-y-4 rounded-lg border border-slate-200 bg-white p-5">
+    <form action={formAction} className="space-y-4 rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
       {banner ? <input type="hidden" name="id" value={banner.id} /> : null}
 
       <div>
@@ -45,7 +45,7 @@ export function BannerForm({ banner }: { banner?: BannerDefaults }) {
       <div>
         <Label htmlFor="image">Banner Image {banner ? "(leave empty to keep current)" : ""}</Label>
         {preview ? (
-          <div className="relative mb-2 h-32 w-full max-w-md overflow-hidden rounded-md border border-slate-200">
+          <div className="relative mb-2 h-32 w-full max-w-md overflow-hidden rounded-md border border-ink-200">
             <Image src={preview} alt="Preview" fill className="object-cover" />
           </div>
         ) : null}

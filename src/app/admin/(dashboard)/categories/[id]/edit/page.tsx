@@ -23,7 +23,7 @@ export default async function EditCategoryPage({
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="mb-6 text-xl font-bold text-slate-900">Edit Category</h1>
+      <h1 className="mb-6 text-xl font-bold text-ink-900">Edit Category</h1>
       <CategoryForm parentOptions={parentOptions} category={category} />
     </div>
   );

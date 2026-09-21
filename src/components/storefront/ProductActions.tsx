@@ -21,10 +21,10 @@ export function ProductActions({ product, image }: Props) {
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
-      <div className="flex items-center rounded-md border border-slate-300">
+      <div className="flex items-center rounded-md border border-ink-300">
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40"
+          className="flex h-11 w-11 items-center justify-center text-ink-600 hover:bg-ink-50 disabled:opacity-40"
           onClick={() => setQty((q) => Math.max(1, q - 1))}
           disabled={outOfStock}
         >
@@ -33,7 +33,7 @@ export function ProductActions({ product, image }: Props) {
         <span className="w-10 text-center text-sm font-medium">{qty}</span>
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center text-slate-600 hover:bg-slate-50 disabled:opacity-40"
+          className="flex h-11 w-11 items-center justify-center text-ink-600 hover:bg-ink-50 disabled:opacity-40"
           onClick={() => setQty((q) => Math.min(product.stock || 99, q + 1))}
           disabled={outOfStock}
         >

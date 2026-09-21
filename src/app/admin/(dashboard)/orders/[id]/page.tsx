@@ -12,7 +12,7 @@ import { buildAdminMessage, buildCustomerMessage, adminNotifyPhone } from "@/lib
 export const metadata: Metadata = { title: "Order Detail" };
 
 const selectClass =
-  "rounded-md border border-slate-300 px-3 py-1.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500";
+  "rounded-md border border-ink-300 px-3 py-1.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500";
 
 export default async function AdminOrderDetailPage({
   params,
@@ -32,14 +32,14 @@ export default async function AdminOrderDetailPage({
     <div className="mx-auto max-w-3xl">
       <Link
         href="/admin/orders"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-ink-800"
       >
         <ArrowLeft className="h-4 w-4" /> Back to orders
       </Link>
 
       <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold text-slate-900">Order {order.orderNumber}</h1>
-        <p className="text-sm text-slate-500">{formatDate(order.createdAt)}</p>
+        <h1 className="text-2xl font-bold tracking-tight text-ink-950">Order {order.orderNumber}</h1>
+        <p className="text-sm text-ink-500">{formatDate(order.createdAt)}</p>
       </div>
 
       <div className="mt-4 rounded-xl border border-green-200 bg-green-50 p-4">
@@ -55,7 +55,7 @@ export default async function AdminOrderDetailPage({
           </a>
           <a
             href={`tel:${order.customerPhone}`}
-            className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-md border border-ink-300 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition hover:bg-ink-50"
           >
             <Phone className="h-4 w-4" /> Call {order.customerPhone}
           </a>
@@ -63,7 +63,7 @@ export default async function AdminOrderDetailPage({
             href={adminWaLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-md border border-ink-300 bg-white px-4 py-2.5 text-sm font-semibold text-ink-700 transition hover:bg-ink-50"
           >
             <MessageCircle className="h-4 w-4" /> Send copy to my WhatsApp
           </a>
@@ -71,8 +71,8 @@ export default async function AdminOrderDetailPage({
       </div>
 
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
-          <p className="mb-1 text-xs font-semibold uppercase text-slate-400">Order Status</p>
+        <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-4">
+          <p className="mb-1 text-xs font-semibold uppercase text-ink-400">Order Status</p>
           <AutoSubmitSelect
             name="status"
             defaultValue={order.status}
@@ -85,8 +85,8 @@ export default async function AdminOrderDetailPage({
             }))}
           />
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
-          <p className="mb-1 text-xs font-semibold uppercase text-slate-400">Payment Status</p>
+        <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-4">
+          <p className="mb-1 text-xs font-semibold uppercase text-ink-400">Payment Status</p>
           <AutoSubmitSelect
             name="paymentStatus"
             defaultValue={order.paymentStatus}
@@ -98,28 +98,28 @@ export default async function AdminOrderDetailPage({
         </div>
       </div>
 
-      <div className="mt-4 rounded-xl border border-slate-200 bg-white p-5">
-        <h2 className="mb-3 font-semibold text-slate-900">Items</h2>
-        <ul className="divide-y divide-slate-100 text-sm">
+      <div className="mt-4 rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-3 font-semibold text-ink-900">Items</h2>
+        <ul className="divide-y divide-ink-100 text-sm">
           {order.items.map((item) => (
             <li key={item.id} className="flex justify-between py-2">
-              <span className="text-slate-600">
+              <span className="text-ink-600">
                 {item.productTitle} × {item.quantity}
               </span>
-              <span className="font-medium text-slate-800">{formatPrice(item.subtotal)}</span>
+              <span className="font-medium text-ink-800">{formatPrice(item.subtotal)}</span>
             </li>
           ))}
         </ul>
-        <div className="mt-3 space-y-1 border-t border-slate-200 pt-3 text-sm">
-          <div className="flex justify-between text-slate-600">
+        <div className="mt-3 space-y-1 border-t border-ink-200 pt-3 text-sm">
+          <div className="flex justify-between text-ink-600">
             <span>Subtotal</span>
             <span>{formatPrice(order.subtotal)}</span>
           </div>
-          <div className="flex justify-between text-slate-600">
+          <div className="flex justify-between text-ink-600">
             <span>Shipping</span>
             <span>{formatPrice(order.shippingFee)}</span>
           </div>
-          <div className="flex justify-between text-base font-semibold text-slate-900">
+          <div className="flex justify-between text-base font-semibold text-ink-900">
             <span>Total</span>
             <span>{formatPrice(order.total)}</span>
           </div>
@@ -127,32 +127,32 @@ export default async function AdminOrderDetailPage({
       </div>
 
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-sm">
-          <h2 className="mb-2 font-semibold text-slate-900">Customer</h2>
-          <p className="text-slate-600">{order.customerName}</p>
-          <p className="text-slate-600">{order.customerPhone}</p>
-          {order.customerEmail ? <p className="text-slate-600">{order.customerEmail}</p> : null}
-          {order.user ? <p className="mt-1 text-xs text-slate-400">Registered account: {order.user.email}</p> : (
-            <p className="mt-1 text-xs text-slate-400">Guest checkout</p>
+        <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-4 text-sm">
+          <h2 className="mb-2 font-semibold text-ink-900">Customer</h2>
+          <p className="text-ink-600">{order.customerName}</p>
+          <p className="text-ink-600">{order.customerPhone}</p>
+          {order.customerEmail ? <p className="text-ink-600">{order.customerEmail}</p> : null}
+          {order.user ? <p className="mt-1 text-xs text-ink-400">Registered account: {order.user.email}</p> : (
+            <p className="mt-1 text-xs text-ink-400">Guest checkout</p>
           )}
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 text-sm">
-          <h2 className="mb-2 font-semibold text-slate-900">Shipping Address</h2>
-          <p className="text-slate-600">
+        <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-4 text-sm">
+          <h2 className="mb-2 font-semibold text-ink-900">Shipping Address</h2>
+          <p className="text-ink-600">
             {order.shippingLine1}
             {order.shippingLine2 ? `, ${order.shippingLine2}` : ""}
           </p>
-          <p className="text-slate-600">
+          <p className="text-ink-600">
             {order.shippingCity}, {order.shippingState} {order.shippingPostal}
           </p>
-          <p className="text-slate-600">{order.shippingCountry}</p>
+          <p className="text-ink-600">{order.shippingCountry}</p>
         </div>
       </div>
 
       {order.notes ? (
-        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4 text-sm">
-          <h2 className="mb-1 font-semibold text-slate-900">Notes</h2>
-          <p className="text-slate-600">{order.notes}</p>
+        <div className="mt-4 rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-4 text-sm">
+          <h2 className="mb-1 font-semibold text-ink-900">Notes</h2>
+          <p className="text-ink-600">{order.notes}</p>
         </div>
       ) : null}
     </div>

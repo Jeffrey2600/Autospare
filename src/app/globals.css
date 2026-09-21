@@ -1,30 +1,102 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Brand palette — change these to re-skin the whole site. */
-  --color-brand-50: #fff7ed;
-  --color-brand-100: #ffedd5;
-  --color-brand-200: #fed7aa;
-  --color-brand-300: #fdba74;
-  --color-brand-400: #fb923c;
-  --color-brand-500: #f97316;
-  --color-brand-600: #ea580c;
-  --color-brand-700: #c2410c;
-  --color-brand-800: #9a3412;
-  --color-brand-900: #7c2d12;
+  /* Brand — a warmer, more saturated orange than stock Tailwind. */
+  --color-brand-50: #fff5ed;
+  --color-brand-100: #ffe8d4;
+  --color-brand-200: #ffcda8;
+  --color-brand-300: #ffa870;
+  --color-brand-400: #ff7a36;
+  --color-brand-500: #fb5a0f;
+  --color-brand-600: #ea3f06;
+  --color-brand-700: #c22d08;
+  --color-brand-800: #9a250f;
+  --color-brand-900: #7c2210;
+  --color-brand-950: #430d04;
+
+  /* Warm neutral ramp — replaces the cold blue-grey defaults. */
+  --color-ink-50: #faf9f7;
+  --color-ink-100: #f4f2ef;
+  --color-ink-200: #e8e4df;
+  --color-ink-300: #d5cfc7;
+  --color-ink-400: #a8a099;
+  --color-ink-500: #7d756e;
+  --color-ink-600: #5c5550;
+  --color-ink-700: #443f3b;
+  --color-ink-800: #2a2624;
+  --color-ink-900: #1a1715;
+  --color-ink-950: #0e0c0b;
+
+  --color-canvas: #faf9f7;
+
+  /* Soft layered depth instead of hard 1px borders everywhere. */
+  --shadow-xs: 0 1px 2px rgb(23 20 18 / 0.05);
+  --shadow-sm: 0 1px 3px rgb(23 20 18 / 0.07), 0 1px 2px rgb(23 20 18 / 0.04);
+  --shadow-md: 0 4px 14px rgb(23 20 18 / 0.07), 0 2px 4px rgb(23 20 18 / 0.04);
+  --shadow-lg: 0 14px 36px rgb(23 20 18 / 0.10), 0 4px 10px rgb(23 20 18 / 0.05);
+  --shadow-xl: 0 28px 64px rgb(23 20 18 / 0.14), 0 8px 16px rgb(23 20 18 / 0.06);
+  --shadow-glow: 0 8px 24px rgb(234 63 6 / 0.28);
+
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+  --radius-3xl: 1.5rem;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink-900);
+  }
+
+  /* Display headings read as one voice: tight tracking, dense leading. */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-brand-950);
+  }
+
+  /* One consistent focus ring across every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .surface {
+    background: #fff;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Frosted sticky header. */
+  .glass {
+    background: color-mix(in srgb, #fff 82%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

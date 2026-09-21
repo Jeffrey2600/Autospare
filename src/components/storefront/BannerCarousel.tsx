@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { buttonClasses } from "@/components/ui/Button";
 
 type BannerSlide = {
@@ -33,7 +33,7 @@ export function BannerCarousel({ banners }: { banners: BannerSlide[] }) {
 
   return (
     <div
-      className="relative h-72 w-full overflow-hidden sm:h-96"
+      className="relative h-[26rem] w-full overflow-hidden sm:h-[32rem]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -41,7 +41,7 @@ export function BannerCarousel({ banners }: { banners: BannerSlide[] }) {
         <div
           key={banner.id}
           aria-hidden={index !== current}
-          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+          className={`absolute inset-0 transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
             index === current ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
         >
@@ -50,16 +50,29 @@ export function BannerCarousel({ banners }: { banners: BannerSlide[] }) {
             alt={banner.title ?? "Promotion"}
             fill
             sizes="100vw"
-            className="object-cover opacity-60"
+            className={`object-cover transition-transform duration-[6000ms] ease-out ${
+              index === current ? "scale-105" : "scale-100"
+            }`}
             priority={index === 0}
           />
-          <div className="absolute inset-0 flex flex-col items-start justify-center gap-4 px-6 sm:px-16">
-            <h1 className="max-w-lg text-3xl font-bold sm:text-5xl">
+          {/* Scrim: keeps the headline readable over any uploaded photo. */}
+          <div className="absolute inset-0 bg-gradient-to-r from-ink-950/92 via-ink-950/70 to-ink-950/25" />
+
+          <div className="relative mx-auto flex h-full max-w-7xl flex-col items-start justify-center gap-5 px-6 sm:px-8">
+            <h1 className="max-w-2xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
               {banner.title ?? "Genuine Parts for Every Ride"}
             </h1>
-            {banner.subtitle ? <p className="max-w-md text-slate-200">{banner.subtitle}</p> : null}
-            <Link href={banner.linkUrl ?? "/products"} className={buttonClasses("primary", "lg")}>
+            {banner.subtitle ? (
+              <p className="max-w-lg text-base leading-relaxed text-ink-300 sm:text-lg">
+                {banner.subtitle}
+              </p>
+            ) : null}
+            <Link
+              href={banner.linkUrl ?? "/products"}
+              className={buttonClasses("primary", "xl", "mt-1")}
+            >
               Shop Now
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -71,7 +84,7 @@ export function BannerCarousel({ banners }: { banners: BannerSlide[] }) {
             type="button"
             onClick={() => goTo(current - 1)}
             aria-label="Previous slide"
-            className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition hover:bg-black/50"
+            className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 sm:left-6"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -79,11 +92,11 @@ export function BannerCarousel({ banners }: { banners: BannerSlide[] }) {
             type="button"
             onClick={() => goTo(current + 1)}
             aria-label="Next slide"
-            className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white transition hover:bg-black/50"
+            className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 sm:right-6"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+          <div className="absolute bottom-7 left-1/2 flex -translate-x-1/2 gap-2">
             {banners.map((banner, index) => (
               <button
                 key={banner.id}
@@ -91,8 +104,8 @@ export function BannerCarousel({ banners }: { banners: BannerSlide[] }) {
                 onClick={() => goTo(index)}
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={index === current}
-                className={`h-2 rounded-full transition-all ${
-                  index === current ? "w-6 bg-white" : "w-2 bg-white/50 hover:bg-white/70"
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === current ? "w-8 bg-brand-500" : "w-1.5 bg-white/40 hover:bg-white/70"
                 }`}
               />
             ))}

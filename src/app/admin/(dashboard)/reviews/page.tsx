@@ -16,14 +16,14 @@ export default async function AdminReviewsPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-slate-900">Reviews</h1>
-      <div className="mt-4 divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+      <h1 className="text-2xl font-bold tracking-tight text-ink-950">Reviews</h1>
+      <div className="mt-4 divide-y divide-ink-100 rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60">
         {reviews.map((review) => (
           <div key={review.id} className="flex flex-col gap-2 px-4 py-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-medium text-slate-800">{review.user.name}</span>
-                <span className="text-xs text-slate-400">on {review.product.title}</span>
+                <span className="font-medium text-ink-800">{review.user.name}</span>
+                <span className="text-xs text-ink-400">on {review.product.title}</span>
                 <span
                   className={
                     review.isApproved
@@ -35,8 +35,8 @@ export default async function AdminReviewsPage() {
                 </span>
               </div>
               <StarRating rating={review.rating} className="my-1" />
-              {review.comment ? <p className="text-sm text-slate-600">{review.comment}</p> : null}
-              <p className="text-xs text-slate-400">{formatDate(review.createdAt)}</p>
+              {review.comment ? <p className="text-sm text-ink-600">{review.comment}</p> : null}
+              <p className="text-xs text-ink-400">{formatDate(review.createdAt)}</p>
             </div>
             <div className="flex shrink-0 gap-2">
               {!review.isApproved ? (
@@ -56,14 +56,14 @@ export default async function AdminReviewsPage() {
               )}
               <form action={deleteReviewAction}>
                 <input type="hidden" name="id" value={review.id} />
-                <ConfirmSubmitButton message="Delete this review?" className="rounded-md p-2 text-slate-500 hover:bg-red-50 hover:text-red-600">
+                <ConfirmSubmitButton message="Delete this review?" className="rounded-md p-2 text-ink-500 hover:bg-red-50 hover:text-red-600">
                   <Trash2 className="h-4 w-4" />
                 </ConfirmSubmitButton>
               </form>
             </div>
           </div>
         ))}
-        {reviews.length === 0 ? <p className="px-4 py-10 text-center text-slate-400">No reviews yet.</p> : null}
+        {reviews.length === 0 ? <p className="px-4 py-10 text-center text-ink-400">No reviews yet.</p> : null}
       </div>
     </div>
   );

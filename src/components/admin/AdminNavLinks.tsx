@@ -40,10 +40,10 @@ export function AdminNavLinks() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
               isActive
-                ? "bg-brand-50 text-brand-700"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                ? "bg-brand-50 text-brand-700 shadow-xs"
+                : "text-ink-600 hover:bg-ink-100 hover:text-ink-900"
             }`}
           >
             <item.icon className={`h-5 w-5 ${isActive ? "text-brand-600" : ""}`} />

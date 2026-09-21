@@ -46,7 +46,7 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
 
   if (items.length === 0 && !state.orderNumber) {
     return (
-      <p className="rounded-lg border border-dashed border-slate-300 p-6 text-center text-slate-500">
+      <p className="rounded-2xl border border-dashed border-ink-300 bg-white p-8 text-center text-ink-500">
         Your cart is empty. Add products before checking out.
       </p>
     );
@@ -57,8 +57,8 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
       <form action={formAction} className="space-y-5">
         <input type="hidden" name="items" value={itemsJson} />
 
-        <div>
-          <h2 className="mb-3 font-semibold text-slate-900">Contact &amp; Shipping Details</h2>
+        <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink-200/60">
+          <h2 className="mb-5 text-lg font-bold tracking-tight text-ink-950">Contact &amp; Shipping Details</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <Label htmlFor="customerName">Full Name</Label>
@@ -76,7 +76,7 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
                 required
                 defaultValue={state.values?.customerPhone}
               />
-              <p className="mt-1 text-xs text-slate-400">We&apos;ll send your order confirmation to this number.</p>
+              <p className="mt-1 text-xs text-ink-400">We&apos;ll send your order confirmation to this number.</p>
             </div>
           </div>
           <div className="mt-4">
@@ -115,33 +115,33 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
           </div>
         </div>
 
-        <div>
-          <h2 className="mb-3 font-semibold text-slate-900">Payment Method</h2>
+        <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink-200/60">
+          <h2 className="mb-4 text-lg font-bold tracking-tight text-ink-950">Payment Method</h2>
           <div className="space-y-2">
-            <label className="flex items-center gap-2 rounded-md border border-slate-300 p-3 text-sm has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50">
+            <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-ink-200 p-4 text-sm font-medium transition-all hover:border-ink-300 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-50 has-[:checked]:ring-2 has-[:checked]:ring-brand-500/15">
               <input
                 type="radio"
                 name="paymentMethod"
                 value="COD"
                 defaultChecked={!state.values?.paymentMethod || state.values.paymentMethod === "COD"}
-                className="accent-brand-600"
+                className="h-4 w-4 accent-brand-600"
               />
               Cash on Delivery / Pay at Store
             </label>
-            <label className="flex items-center gap-2 rounded-md border border-slate-300 p-3 text-sm has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50">
+            <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-ink-200 p-4 text-sm font-medium transition-all hover:border-ink-300 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-50 has-[:checked]:ring-2 has-[:checked]:ring-brand-500/15">
               <input
                 type="radio"
                 name="paymentMethod"
                 value="BANK_TRANSFER"
                 defaultChecked={state.values?.paymentMethod === "BANK_TRANSFER"}
-                className="accent-brand-600"
+                className="h-4 w-4 accent-brand-600"
               />
               Bank Transfer
             </label>
           </div>
         </div>
 
-        <div>
+        <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink-200/60">
           <Label htmlFor="notes">Order Notes (optional)</Label>
           <Textarea
             id="notes"
@@ -159,28 +159,28 @@ export function CheckoutForm({ defaultName, defaultEmail, shippingFee, freeShipp
         </Button>
       </form>
 
-      <div className="h-fit rounded-lg border border-slate-200 p-5">
-        <h2 className="font-semibold text-slate-900">Order Summary</h2>
+      <div className="h-fit rounded-2xl bg-white p-6 shadow-sm ring-1 ring-ink-200/60 lg:sticky lg:top-40">
+        <h2 className="text-lg font-bold tracking-tight text-ink-950">Order Summary</h2>
         <ul className="mt-3 space-y-2 text-sm">
           {items.map((item) => (
             <li key={item.productId} className="flex justify-between gap-2">
-              <span className="text-slate-600">
+              <span className="text-ink-600">
                 {item.title} × {item.quantity}
               </span>
-              <span className="font-medium text-slate-800">{formatPrice(item.price * item.quantity)}</span>
+              <span className="font-medium text-ink-800">{formatPrice(item.price * item.quantity)}</span>
             </li>
           ))}
         </ul>
-        <div className="mt-4 space-y-1 border-t border-slate-200 pt-3 text-sm">
-          <div className="flex justify-between text-slate-600">
+        <div className="mt-4 space-y-1 border-t border-ink-200 pt-3 text-sm">
+          <div className="flex justify-between text-ink-600">
             <span>Subtotal</span>
             <span>{formatPrice(subtotal)}</span>
           </div>
-          <div className="flex justify-between text-slate-600">
+          <div className="flex justify-between text-ink-600">
             <span>Shipping</span>
             <span>{finalShippingFee === 0 ? "Free" : formatPrice(finalShippingFee)}</span>
           </div>
-          <div className="flex justify-between text-base font-semibold text-slate-900">
+          <div className="flex justify-between pt-1 text-lg font-bold text-ink-950">
             <span>Total</span>
             <span>{formatPrice(total)}</span>
           </div>

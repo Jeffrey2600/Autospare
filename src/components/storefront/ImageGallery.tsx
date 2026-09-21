@@ -16,7 +16,7 @@ export function ImageGallery({
 
   return (
     <div>
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-slate-200 bg-white">
+      <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-ink-200 bg-white">
         {current ? (
           <Image
             src={current.url}
@@ -27,7 +27,7 @@ export function ImageGallery({
             priority
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-slate-300">No image</div>
+          <div className="flex h-full items-center justify-center text-ink-300">No image</div>
         )}
       </div>
       {images.length > 1 ? (
@@ -39,7 +39,7 @@ export function ImageGallery({
               onClick={() => setActive(idx)}
               className={cn(
                 "relative h-16 w-16 shrink-0 overflow-hidden rounded-md border-2 bg-white",
-                idx === active ? "border-brand-600" : "border-slate-200"
+                idx === active ? "border-brand-600" : "border-ink-200"
               )}
             >
               <Image src={img.url} alt={img.altText ?? title} fill className="object-contain p-1" />

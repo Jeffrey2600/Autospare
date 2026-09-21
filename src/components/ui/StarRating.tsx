@@ -17,7 +17,7 @@ export function StarRating({
           key={i}
           width={size}
           height={size}
-          className={i <= Math.round(rating) ? "fill-amber-400 text-amber-400" : "text-slate-300"}
+          className={i <= Math.round(rating) ? "fill-amber-400 text-amber-400" : "text-ink-300"}
         />
       ))}
     </div>

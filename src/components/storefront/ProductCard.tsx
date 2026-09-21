@@ -19,56 +19,63 @@ export function ProductCard({ product }: { product: ProductCardData }) {
     product.compareAtPrice && product.compareAtPrice > product.price
       ? Math.round(100 - (product.price / product.compareAtPrice) * 100)
       : null;
+  const outOfStock = product.stock <= 0;
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white transition-all hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-lg">
-      <Link href={`/products/${product.slug}`} className="relative block aspect-square bg-slate-50">
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-lg hover:ring-ink-200">
+      <Link
+        href={`/products/${product.slug}`}
+        className="relative block aspect-square overflow-hidden bg-ink-50"
+      >
         {image ? (
           <Image
             src={image}
             alt={product.images[0]?.altText ?? product.title}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-            className="object-contain p-4 transition-transform group-hover:scale-105"
+            className="object-contain p-5 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.07]"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-slate-300">
+          <div className="flex h-full items-center justify-center text-sm text-ink-300">
             No image
           </div>
         )}
-        {discount ? (
-          <span className="absolute left-2 top-2 rounded bg-brand-600 px-2 py-1 text-xs font-semibold text-white">
-            -{discount}%
-          </span>
-        ) : null}
-        {product.stock <= 0 ? (
-          <span className="absolute right-2 top-2 rounded bg-slate-900/80 px-2 py-1 text-xs font-semibold text-white">
-            Out of stock
-          </span>
-        ) : null}
+
+        <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between p-3">
+          {discount ? (
+            <span className="rounded-lg bg-brand-600 px-2 py-1 text-[0.6875rem] font-bold tracking-wide text-white shadow-sm">
+              {discount}% OFF
+            </span>
+          ) : (
+            <span />
+          )}
+          {outOfStock ? (
+            <span className="rounded-lg bg-ink-900/85 px-2 py-1 text-[0.6875rem] font-semibold text-white backdrop-blur-sm">
+              Out of stock
+            </span>
+          ) : null}
+        </div>
       </Link>
-      <div className="flex flex-1 flex-col gap-2 p-3">
-        <Link href={`/products/${product.slug}`}>
-          <h3 className="line-clamp-2 text-sm font-medium text-slate-800 hover:text-brand-700">
+
+      <div className="flex flex-1 flex-col gap-3 p-4">
+        <Link href={`/products/${product.slug}`} className="flex-1">
+          <h3 className="line-clamp-2 text-sm font-medium leading-snug text-ink-800 transition-colors group-hover:text-brand-700">
             {product.title}
           </h3>
         </Link>
-        <div className="mt-auto flex items-baseline gap-2">
-          <span className="text-base font-semibold text-slate-900">
+
+        <div className="flex items-baseline gap-2">
+          <span className="text-lg font-bold tracking-tight text-ink-950">
             {formatPrice(product.price)}
           </span>
           {product.compareAtPrice && product.compareAtPrice > product.price ? (
-            <span className="text-xs text-slate-400 line-through">
+            <span className="text-sm text-ink-400 line-through">
               {formatPrice(product.compareAtPrice)}
             </span>
           ) : null}
         </div>
-        <AddToCartButton
-          product={product}
-          image={image}
-          className="mt-1"
-          fullWidth
-        />
+
+        <AddToCartButton product={product} image={image} fullWidth />
       </div>
     </div>
   );

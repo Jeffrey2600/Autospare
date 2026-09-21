@@ -44,13 +44,13 @@ export function ProductForm({
     <form action={formAction} className="space-y-6">
       {product ? <input type="hidden" name="id" value={product.id} /> : null}
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Photos</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Photos</h2>
         <ProductImageManager initialImages={product?.images ?? []} />
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Basic Information</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Basic Information</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <Label htmlFor="title">Product Title</Label>
@@ -93,8 +93,8 @@ export function ProductForm({
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Pricing &amp; Stock</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Pricing &amp; Stock</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>
             <Label htmlFor="price">Selling Price (₹)</Label>
@@ -111,8 +111,8 @@ export function ProductForm({
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Description</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Description</h2>
         <div className="space-y-4">
           <div>
             <Label htmlFor="shortDescription">Short Description (shown in listings)</Label>
@@ -134,8 +134,8 @@ export function ProductForm({
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Visibility</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Visibility</h2>
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" name="isActive" defaultChecked={product?.isActive ?? true} className="accent-brand-600" />

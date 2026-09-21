@@ -9,7 +9,7 @@ export default async function AdminSettingsPage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="mb-6 text-xl font-bold text-slate-900">Store Settings</h1>
+      <h1 className="mb-6 text-xl font-bold text-ink-900">Store Settings</h1>
       <SettingsForm settings={settings} />
     </div>
   );

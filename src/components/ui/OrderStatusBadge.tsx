@@ -11,7 +11,7 @@ const styles: Record<string, string> = {
 
 export function OrderStatusBadge({ status }: { status: string }) {
   return (
-    <span className={cn("rounded-full px-2.5 py-1 text-xs font-semibold", styles[status] ?? "bg-slate-100 text-slate-700")}>
+    <span className={cn("rounded-full px-2.5 py-1 text-xs font-semibold", styles[status] ?? "bg-ink-100 text-ink-700")}>
       {status}
     </span>
   );

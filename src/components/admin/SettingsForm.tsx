@@ -29,8 +29,8 @@ export function SettingsForm({ settings }: { settings: Settings }) {
 
   return (
     <form action={formAction} className="space-y-6">
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Store Identity</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Store Identity</h2>
         <div className="space-y-4">
           <div>
             <Label htmlFor="storeName">Store Name</Label>
@@ -43,7 +43,7 @@ export function SettingsForm({ settings }: { settings: Settings }) {
           <div>
             <Label htmlFor="logo">Logo</Label>
             {preview ? (
-              <div className="relative mb-2 h-16 w-16 overflow-hidden rounded-md border border-slate-200 bg-white">
+              <div className="relative mb-2 h-16 w-16 overflow-hidden rounded-md border border-ink-200 bg-white">
                 <Image src={preview} alt="Logo preview" fill className="object-contain p-1" />
               </div>
             ) : null}
@@ -62,8 +62,8 @@ export function SettingsForm({ settings }: { settings: Settings }) {
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Contact Details</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Contact Details</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <Label htmlFor="phone">Phone</Label>
@@ -84,8 +84,8 @@ export function SettingsForm({ settings }: { settings: Settings }) {
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Social Links</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Social Links</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <Label htmlFor="facebookUrl">Facebook URL</Label>
@@ -98,8 +98,8 @@ export function SettingsForm({ settings }: { settings: Settings }) {
         </div>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-4 font-semibold text-slate-900">Shipping</h2>
+      <div className="rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
+        <h2 className="mb-4 font-semibold text-ink-900">Shipping</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <Label htmlFor="shippingFee">Flat Shipping Fee (₹)</Label>

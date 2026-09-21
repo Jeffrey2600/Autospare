@@ -16,8 +16,8 @@ export default async function AdminBannersPage() {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Homepage Banners</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold tracking-tight text-ink-950">Homepage Banners</h1>
+          <p className="mt-1 text-sm text-ink-500">
             These rotate at the top of your homepage. Upload your own offer images here.
           </p>
         </div>
@@ -30,8 +30,8 @@ export default async function AdminBannersPage() {
 
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {banners.map((banner) => (
-          <div key={banner.id} className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-            <div className="relative h-32 w-full bg-slate-100">
+          <div key={banner.id} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60">
+            <div className="relative h-32 w-full bg-ink-100">
               <Image
                 src={banner.image}
                 alt={banner.title ?? "Banner"}
@@ -42,8 +42,8 @@ export default async function AdminBannersPage() {
             </div>
             <div className="flex flex-wrap items-center justify-between gap-3 p-3">
               <div>
-                <p className="font-medium text-slate-800">{banner.title || "Untitled"}</p>
-                <p className="text-xs text-slate-400">{banner.isActive ? "Active" : "Hidden"}</p>
+                <p className="font-medium text-ink-800">{banner.title || "Untitled"}</p>
+                <p className="text-xs text-ink-400">{banner.isActive ? "Active" : "Hidden"}</p>
               </div>
               <div className="flex gap-2">
                 <Link href={`/admin/banners/${banner.id}/edit`}>
@@ -55,7 +55,7 @@ export default async function AdminBannersPage() {
                   <input type="hidden" name="id" value={banner.id} />
                   <ConfirmSubmitButton
                     message="Delete this banner?"
-                    className="inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-300 px-3 text-sm font-medium text-slate-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                    className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-ink-200 px-3.5 text-sm font-semibold text-ink-600 shadow-xs transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600"
                   >
                     <Trash2 className="h-4 w-4" /> Delete
                   </ConfirmSubmitButton>
@@ -64,7 +64,7 @@ export default async function AdminBannersPage() {
             </div>
           </div>
         ))}
-        {banners.length === 0 ? <p className="col-span-full py-10 text-center text-slate-400">No banners yet.</p> : null}
+        {banners.length === 0 ? <p className="col-span-full py-10 text-center text-ink-400">No banners yet.</p> : null}
       </div>
     </div>
   );

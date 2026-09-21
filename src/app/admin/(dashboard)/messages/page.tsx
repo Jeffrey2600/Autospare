@@ -13,39 +13,39 @@ export default async function AdminMessagesPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-slate-900">Contact Messages</h1>
-      <div className="mt-4 divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+      <h1 className="text-2xl font-bold tracking-tight text-ink-950">Contact Messages</h1>
+      <div className="mt-4 divide-y divide-ink-100 rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60">
         {messages.map((msg) => (
           <div key={msg.id} className={cn("flex flex-col gap-2 px-4 py-4 sm:flex-row sm:items-start sm:justify-between", !msg.isRead && "bg-brand-50/40")}>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-medium text-slate-800">{msg.name}</span>
+                <span className="font-medium text-ink-800">{msg.name}</span>
                 {!msg.isRead ? <span className="rounded-full bg-brand-100 px-2 py-0.5 text-xs font-semibold text-brand-700">New</span> : null}
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-ink-400">
                 {msg.email} {msg.phone ? `· ${msg.phone}` : ""} · {formatDate(msg.createdAt)}
               </p>
-              <p className="mt-1 text-sm text-slate-600">{msg.message}</p>
+              <p className="mt-1 text-sm text-ink-600">{msg.message}</p>
             </div>
             <div className="flex shrink-0 gap-2">
               {!msg.isRead ? (
                 <form action={markMessageReadAction}>
                   <input type="hidden" name="id" value={msg.id} />
-                  <button type="submit" className="rounded-md p-2 text-slate-500 hover:bg-slate-100" aria-label="Mark as read">
+                  <button type="submit" className="rounded-md p-2 text-ink-500 hover:bg-ink-100" aria-label="Mark as read">
                     <Mail className="h-4 w-4" />
                   </button>
                 </form>
               ) : null}
               <form action={deleteMessageAction}>
                 <input type="hidden" name="id" value={msg.id} />
-                <ConfirmSubmitButton message="Delete this message?" className="rounded-md p-2 text-slate-500 hover:bg-red-50 hover:text-red-600">
+                <ConfirmSubmitButton message="Delete this message?" className="rounded-md p-2 text-ink-500 hover:bg-red-50 hover:text-red-600">
                   <Trash2 className="h-4 w-4" />
                 </ConfirmSubmitButton>
               </form>
             </div>
           </div>
         ))}
-        {messages.length === 0 ? <p className="px-4 py-10 text-center text-slate-400">No messages yet.</p> : null}
+        {messages.length === 0 ? <p className="px-4 py-10 text-center text-ink-400">No messages yet.</p> : null}
       </div>
     </div>
   );

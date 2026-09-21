@@ -62,12 +62,12 @@ export function ProductImageManager({ initialImages }: { initialImages: Existing
 
       <div className="flex flex-wrap gap-3">
         {existing.map((img, index) => (
-          <div key={img.id} className="group relative h-24 w-24 overflow-hidden rounded-md border border-slate-200 bg-white">
+          <div key={img.id} className="group relative h-24 w-24 overflow-hidden rounded-md border border-ink-200 bg-white">
             <Image src={img.url} alt={img.altText ?? "Product image"} fill className="object-contain p-1" />
             <button
               type="button"
               onClick={() => removeExisting(img.id)}
-              className="absolute right-1 top-1 rounded-full bg-white/90 p-1 text-slate-600 shadow hover:text-red-600"
+              className="absolute right-1 top-1 rounded-full bg-white/90 p-1 text-ink-600 shadow hover:text-red-600"
               aria-label="Remove image"
             >
               <X className="h-3 w-3" />
@@ -90,13 +90,13 @@ export function ProductImageManager({ initialImages }: { initialImages: Existing
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className="flex h-24 w-24 flex-col items-center justify-center gap-1 rounded-md border-2 border-dashed border-slate-300 text-slate-400 hover:border-brand-400 hover:text-brand-600"
+          className="flex h-24 w-24 flex-col items-center justify-center gap-1 rounded-md border-2 border-dashed border-ink-300 text-ink-400 hover:border-brand-400 hover:text-brand-600"
         >
           <ImagePlus className="h-5 w-5" />
           <span className="text-xs">Add Photos</span>
         </button>
       </div>
-      <p className="mt-2 text-xs text-slate-400">JPG, PNG or WEBP. Up to 5MB per image.</p>
+      <p className="mt-2 text-xs text-ink-400">JPG, PNG or WEBP. Up to 5MB per image.</p>
     </div>
   );
 }
@@ -111,7 +111,7 @@ function NewFilePreview({ file, onRemove }: { file: File; onRemove: () => void }
       <button
         type="button"
         onClick={onRemove}
-        className="absolute right-1 top-1 rounded-full bg-white/90 p-1 text-slate-600 shadow hover:text-red-600"
+        className="absolute right-1 top-1 rounded-full bg-white/90 p-1 text-ink-600 shadow hover:text-red-600"
         aria-label="Remove image"
       >
         <X className="h-3 w-3" />

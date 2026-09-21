@@ -14,13 +14,13 @@ export function BrandForm() {
   return (
     <form ref={formRef} action={formAction} className="flex flex-wrap items-end gap-3">
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="name">
+        <label className="mb-1 block text-sm font-medium text-ink-700" htmlFor="name">
           Brand Name
         </label>
         <Input id="name" name="name" required placeholder="e.g. Bosch" />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700" htmlFor="logo">
+        <label className="mb-1 block text-sm font-medium text-ink-700" htmlFor="logo">
           Logo (optional)
         </label>
         <input id="logo" name="logo" type="file" accept="image/*" className="text-sm" />

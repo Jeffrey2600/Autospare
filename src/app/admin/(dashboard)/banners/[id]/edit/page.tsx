@@ -14,7 +14,7 @@ export default async function EditBannerPage({
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="mb-6 text-xl font-bold text-slate-900">Edit Banner</h1>
+      <h1 className="mb-6 text-xl font-bold text-ink-900">Edit Banner</h1>
       <BannerForm banner={banner} />
     </div>
   );

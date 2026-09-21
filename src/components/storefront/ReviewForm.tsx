@@ -22,16 +22,16 @@ export function ReviewForm({ productId, productSlug }: { productId: string; prod
   }
 
   return (
-    <form action={formAction} className="space-y-3 rounded-lg border border-slate-200 p-4">
+    <form action={formAction} className="space-y-3 rounded-lg border border-ink-200 p-4">
       <input type="hidden" name="productId" value={productId} />
       <input type="hidden" name="productSlug" value={productSlug} />
       <input type="hidden" name="rating" value={rating} />
       <div>
-        <p className="mb-1 text-sm font-medium text-slate-700">Your rating</p>
+        <p className="mb-1 text-sm font-medium text-ink-700">Your rating</p>
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((i) => (
             <button key={i} type="button" onClick={() => setRating(i)} aria-label={`Rate ${i} stars`}>
-              <Star className={cn("h-6 w-6", i <= rating ? "fill-amber-400 text-amber-400" : "text-slate-300")} />
+              <Star className={cn("h-6 w-6", i <= rating ? "fill-amber-400 text-amber-400" : "text-ink-300")} />
             </button>
           ))}
         </div>

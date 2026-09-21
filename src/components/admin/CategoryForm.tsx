@@ -33,7 +33,7 @@ export function CategoryForm({
   const [preview, setPreview] = useState<string | null>(category?.image ?? null);
 
   return (
-    <form action={formAction} className="space-y-5 rounded-lg border border-slate-200 bg-white p-5">
+    <form action={formAction} className="space-y-5 rounded-2xl bg-white shadow-sm ring-1 ring-ink-200/60 p-5">
       {category ? <input type="hidden" name="id" value={category.id} /> : null}
 
       <div>
@@ -78,7 +78,7 @@ export function CategoryForm({
       <div>
         <Label htmlFor="image">Category Image (optional)</Label>
         {preview ? (
-          <div className="relative mb-2 h-20 w-20 overflow-hidden rounded-md border border-slate-200">
+          <div className="relative mb-2 h-20 w-20 overflow-hidden rounded-md border border-ink-200">
             <Image src={preview} alt="Preview" fill className="object-cover" />
           </div>
         ) : null}
