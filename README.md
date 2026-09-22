@@ -20,8 +20,9 @@ orders and site content.
 - Product catalog with search, category/vehicle-type/brand filters, price range, sorting, pagination
 - Product detail pages with image gallery, stock status, compatibility info, and customer reviews
 - Cart, checkout (Cash on Delivery / Bank Transfer) with required contact
-  and shipping details, order confirmation, SMS alerts to the customer and
-  shop owner on every order (see "Order SMS notifications" below)
+  and shipping details, order confirmation, and WhatsApp alerts to the
+  customer and shop owner on every order (see "Order notifications on
+  WhatsApp" below)
 - Customer accounts: register/login, order history, order detail
 - Contact form, About page, Shipping/Returns, Terms, Privacy pages
 - WhatsApp chat button, SEO metadata, sitemap.xml, robots.txt
@@ -39,6 +40,23 @@ orders and site content.
 - Store settings: name, logo, contact info, social links, shipping fee / free-shipping threshold
 
 ## Getting Started
+
+> **Handing this to a non-technical client?** Point them at
+> [`SETUP-GUIDE.md`](SETUP-GUIDE.md) instead — it covers installing Node,
+> double-clicking `START.bat`, and using the admin panel in plain English.
+
+### Quick start
+
+```bash
+npm install
+npm run setup   # creates .env, applies migrations, generates the client, seeds demo data
+npm run dev
+```
+
+`npm run setup` is safe to re-run; it won't overwrite an existing `.env`.
+On Windows, double-clicking `START.bat` does all three steps for you.
+
+### Manual setup
 
 ### 1. Install dependencies
 
@@ -105,9 +123,9 @@ info) is meant to be replaced from the admin panel:
   social links, shipping fee.
 - **Homepage banners**: `/admin/banners`.
 
-The placeholder product photos are plain generated images (colored
-rectangles with the product name) — replace them with real photos through
-each product's edit page.
+Two products with no suitable freely-licensed photo fall back to a plain
+generated graphic; replace those (and ideally all of them) with real
+photos through each product's edit page.
 
 ## Project Structure
 
